@@ -27,13 +27,12 @@ export class ExpoPKCEAdapter implements PKCEAdapter {
     return Crypto.randomUUID();
   }
 
-
-
   /**
    * Generate a random string for code verifier
    */
   private generateRandomString(length: number): string {
-    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+    const charset =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
     let result = '';
     for (let i = 0; i < length; i++) {
       result += charset.charAt(Math.floor(Math.random() * charset.length));
@@ -51,6 +50,6 @@ export class ExpoPKCEAdapter implements PKCEAdapter {
       { encoding: Crypto.CryptoEncoding.BASE64 }
     );
     // Convert base64 to base64url
-    return hash.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+    return hash.replace(/\+/g, '-').replace(/\//g, '_').replace(/[=]/g, '');
   }
 }

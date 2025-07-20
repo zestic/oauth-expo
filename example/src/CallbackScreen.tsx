@@ -1,10 +1,10 @@
 import React from 'react';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { 
-  OAuthCallbackScreen, 
+import {
+  OAuthCallbackScreen,
   useOAuthConfig,
   type OAuthCallbackParams,
-  type OAuthResult 
+  type OAuthResult,
 } from 'oauth-expo';
 
 /**
@@ -20,10 +20,16 @@ export default function CallbackScreen() {
     code: typeof params.code === 'string' ? params.code : undefined,
     state: typeof params.state === 'string' ? params.state : undefined,
     token: typeof params.token === 'string' ? params.token : undefined,
-    magic_link_token: typeof params.magic_link_token === 'string' ? params.magic_link_token : undefined,
+    magic_link_token:
+      typeof params.magic_link_token === 'string'
+        ? params.magic_link_token
+        : undefined,
     flow: typeof params.flow === 'string' ? params.flow : undefined,
     error: typeof params.error === 'string' ? params.error : undefined,
-    error_description: typeof params.error_description === 'string' ? params.error_description : undefined,
+    error_description:
+      typeof params.error_description === 'string'
+        ? params.error_description
+        : undefined,
   };
 
   // Use the same config as the main app
@@ -37,12 +43,12 @@ export default function CallbackScreen() {
 
   const handleSuccess = (result: OAuthResult) => {
     console.log('OAuth success:', result);
-    
+
     // In a real app, you might:
     // 1. Update global auth state
     // 2. Navigate to the main app
     // 3. Store user information
-    
+
     // For demo, navigate back to main screen
     setTimeout(() => {
       router.replace('/');
@@ -51,12 +57,12 @@ export default function CallbackScreen() {
 
   const handleError = (error: Error) => {
     console.error('OAuth error:', error);
-    
+
     // In a real app, you might:
     // 1. Log the error
     // 2. Show user-friendly error message
     // 3. Navigate back to login
-    
+
     // For demo, navigate back to main screen after delay
     setTimeout(() => {
       router.replace('/');
@@ -114,10 +120,16 @@ export function MinimalCallbackExample() {
     code: typeof params.code === 'string' ? params.code : undefined,
     state: typeof params.state === 'string' ? params.state : undefined,
     token: typeof params.token === 'string' ? params.token : undefined,
-    magic_link_token: typeof params.magic_link_token === 'string' ? params.magic_link_token : undefined,
+    magic_link_token:
+      typeof params.magic_link_token === 'string'
+        ? params.magic_link_token
+        : undefined,
     flow: typeof params.flow === 'string' ? params.flow : undefined,
     error: typeof params.error === 'string' ? params.error : undefined,
-    error_description: typeof params.error_description === 'string' ? params.error_description : undefined,
+    error_description:
+      typeof params.error_description === 'string'
+        ? params.error_description
+        : undefined,
   };
 
   const config = useOAuthConfig({

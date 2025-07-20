@@ -12,7 +12,7 @@ export type {
   TokenExchangeRequest,
   TokenResponse,
   OAuthError,
-  OAuthErrorCode
+  OAuthErrorCode,
 } from '@zestic/oauth-core';
 
 /**
@@ -37,17 +37,17 @@ export interface OAuthCallbackParams {
   // OAuth2 Authorization Code Flow
   code?: string;
   state?: string;
-  
+
   // Magic Link Flow
   token?: string;
   magic_link_token?: string;
   flow?: 'login' | 'registration' | 'magic_link';
-  
+
   // Error parameters
   error?: string;
   error_description?: string;
   error_uri?: string;
-  
+
   // Additional parameters
   [key: string]: string | null | undefined;
 }

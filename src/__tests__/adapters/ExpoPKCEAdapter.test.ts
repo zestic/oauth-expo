@@ -26,7 +26,9 @@ describe('ExpoPKCEAdapter', () => {
   describe('generateCodeChallenge', () => {
     it('should generate PKCE challenge with S256 method', async () => {
       // Mock the SHA256 hash result (base64)
-      mockCrypto.digestStringAsync.mockResolvedValue('dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk=');
+      mockCrypto.digestStringAsync.mockResolvedValue(
+        'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk='
+      );
 
       const result = await adapter.generateCodeChallenge();
 
@@ -54,12 +56,16 @@ describe('ExpoPKCEAdapter', () => {
 
     it('should convert base64 to base64url format', async () => {
       // Mock base64 with padding and special characters
-      mockCrypto.digestStringAsync.mockResolvedValue('dBjftJeZ4CVP+mB92K27uhbUJU1p1r/wW1gFWFOEjXk=');
+      mockCrypto.digestStringAsync.mockResolvedValue(
+        'dBjftJeZ4CVP+mB92K27uhbUJU1p1r/wW1gFWFOEjXk='
+      );
 
       const result = await adapter.generateCodeChallenge();
 
       // Should convert + to -, / to _, and remove =
-      expect(result.codeChallenge).toBe('dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk');
+      expect(result.codeChallenge).toBe(
+        'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk'
+      );
     });
 
     it('should call digestStringAsync with correct parameters', async () => {
@@ -77,13 +83,17 @@ describe('ExpoPKCEAdapter', () => {
     it('should handle crypto errors', async () => {
       mockCrypto.digestStringAsync.mockRejectedValue(new Error('Crypto error'));
 
-      await expect(adapter.generateCodeChallenge()).rejects.toThrow('Crypto error');
+      await expect(adapter.generateCodeChallenge()).rejects.toThrow(
+        'Crypto error'
+      );
     });
   });
 
   describe('generateState', () => {
     it('should generate a random UUID state', async () => {
-      mockCrypto.randomUUID.mockReturnValue('550e8400-e29b-41d4-a716-446655440000');
+      mockCrypto.randomUUID.mockReturnValue(
+        '550e8400-e29b-41d4-a716-446655440000'
+      );
 
       const result = await adapter.generateState();
 
@@ -137,15 +147,21 @@ describe('ExpoPKCEAdapter', () => {
   describe('sha256', () => {
     it('should handle various input strings', async () => {
       const testCases = [
-        { input: 'test', output: 'n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=' },
-        { input: 'hello world', output: 'uU0nuZNNPgilLlLX2n2r+sSE7+N6U4DukIj3rOLvzek=' },
+        {
+          input: 'test',
+          output: 'n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=',
+        },
+        {
+          input: 'hello world',
+          output: 'uU0nuZNNPgilLlLX2n2r+sSE7+N6U4DukIj3rOLvzek=',
+        },
         { input: '', output: '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' },
       ];
 
       for (const testCase of testCases) {
         mockCrypto.digestStringAsync.mockResolvedValue(testCase.output);
 
-        const result = await adapter.generateCodeChallenge();
+        await adapter.generateCodeChallenge();
 
         expect(mockCrypto.digestStringAsync).toHaveBeenCalledWith(
           'SHA256',
@@ -159,7 +175,9 @@ describe('ExpoPKCEAdapter', () => {
   describe('integration test', () => {
     it('should generate valid PKCE parameters', async () => {
       mockCrypto.randomUUID.mockReturnValue('test-state-uuid');
-      mockCrypto.digestStringAsync.mockResolvedValue('dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk=');
+      mockCrypto.digestStringAsync.mockResolvedValue(
+        'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk='
+      );
 
       const challenge = await adapter.generateCodeChallenge();
       const state = await adapter.generateState();

@@ -16,7 +16,7 @@ import type {
   OAuthTheme,
   OAuthVariant,
   OAuthThemeConfig,
-  OAuthComponentOverrides
+  OAuthComponentOverrides,
 } from '../types';
 
 /**
@@ -94,15 +94,11 @@ export function OAuthCallbackScreen({
   // Get theme-aware styles
   const themedStyles = getThemedStyles(theme, variant, themeConfig);
 
-  const { status, message, retry } = useOAuthCallback(
-    params,
-    config,
-    {
-      onSuccess,
-      onError,
-      autoStart: true,
-    }
-  );
+  const { status, message, retry } = useOAuthCallback(params, config, {
+    onSuccess,
+    onError,
+    autoStart: true,
+  });
 
   // Handle auto-redirect on success
   useEffect(() => {
@@ -127,7 +123,9 @@ export function OAuthCallbackScreen({
   const getStatusMessage = () => {
     switch (status) {
       case 'processing':
-        return messages?.processing || message || 'Processing OAuth callback...';
+        return (
+          messages?.processing || message || 'Processing OAuth callback...'
+        );
       case 'success':
         return messages?.success || message || 'Authentication successful!';
       case 'error':
@@ -144,18 +142,36 @@ export function OAuthCallbackScreen({
 
     switch (status) {
       case 'processing':
-        return <LoadingIndicator size="large" color={themedStyles.colors.primary} />;
+        return (
+          <LoadingIndicator size="large" color={themedStyles.colors.primary} />
+        );
       case 'success':
         return SuccessIcon ? (
           <SuccessIcon />
         ) : (
-          <Text style={[themedStyles.icon, themedStyles.successIcon, customStyles?.title]}>✓</Text>
+          <Text
+            style={[
+              themedStyles.icon,
+              themedStyles.successIcon,
+              customStyles?.title,
+            ]}
+          >
+            ✓
+          </Text>
         );
       case 'error':
         return ErrorIcon ? (
           <ErrorIcon />
         ) : (
-          <Text style={[themedStyles.icon, themedStyles.errorIcon, customStyles?.title]}>✗</Text>
+          <Text
+            style={[
+              themedStyles.icon,
+              themedStyles.errorIcon,
+              customStyles?.title,
+            ]}
+          >
+            ✗
+          </Text>
         );
       default:
         return null;
@@ -213,58 +229,6 @@ export function OAuthCallbackScreen({
 }
 
 /**
- * Default styles for the OAuth callback screen
- */
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  content: {
-    alignItems: 'center',
-    maxWidth: 300,
-  },
-  icon: {
-    fontSize: 48,
-    marginBottom: 20,
-    color: '#007AFF',
-  },
-  errorIcon: {
-    color: '#FF3B30',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#000000',
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  message: {
-    fontSize: 16,
-    color: '#666666',
-    textAlign: 'center',
-    lineHeight: 22,
-    marginBottom: 30,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 8,
-    minWidth: 120,
-  },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-});
-
-/**
  * Minimal OAuth callback screen with just loading indicator
  */
 export function MinimalOAuthCallbackScreen({
@@ -272,7 +236,10 @@ export function MinimalOAuthCallbackScreen({
   config,
   onSuccess,
   onError,
-}: Pick<OAuthCallbackScreenProps, 'params' | 'config' | 'onSuccess' | 'onError'>) {
+}: Pick<
+  OAuthCallbackScreenProps,
+  'params' | 'config' | 'onSuccess' | 'onError'
+>) {
   useOAuthCallback(params, config, { onSuccess, onError });
 
   return (

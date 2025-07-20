@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderHook, act, waitFor } from '@testing-library/react-native';
 import { useOAuthCallback } from '../../hooks/useOAuthCallback';
 import { ExpoOAuthAdapter } from '../../ExpoOAuthAdapter';
@@ -9,7 +8,9 @@ jest.mock('../../ExpoOAuthAdapter', () => ({
   ExpoOAuthAdapter: jest.fn(),
 }));
 
-const MockedExpoOAuthAdapter = ExpoOAuthAdapter as jest.MockedClass<typeof ExpoOAuthAdapter>;
+const MockedExpoOAuthAdapter = ExpoOAuthAdapter as jest.MockedClass<
+  typeof ExpoOAuthAdapter
+>;
 
 describe('useOAuthCallback', () => {
   let mockAdapter: jest.Mocked<ExpoOAuthAdapter>;
@@ -43,7 +44,9 @@ describe('useOAuthCallback', () => {
 
   describe('initial state', () => {
     it('should return initial state correctly', () => {
-      const { result } = renderHook(() => useOAuthCallback(mockParams, mockConfig, { autoStart: false }));
+      const { result } = renderHook(() =>
+        useOAuthCallback(mockParams, mockConfig, { autoStart: false })
+      );
 
       expect(result.current.status).toBe('processing');
       expect(result.current.message).toBe('Processing OAuth callback...');
@@ -62,7 +65,9 @@ describe('useOAuthCallback', () => {
 
       mockAdapter.handleCallback.mockResolvedValue(mockResult as any);
 
-      const { result } = renderHook(() => useOAuthCallback(mockParams, mockConfig));
+      const { result } = renderHook(() =>
+        useOAuthCallback(mockParams, mockConfig)
+      );
 
       await waitFor(() => {
         expect(result.current.status).toBe('success');
@@ -84,7 +89,9 @@ describe('useOAuthCallback', () => {
 
       mockAdapter.handleCallback.mockResolvedValue(mockResult as any);
 
-      const { result } = renderHook(() => useOAuthCallback(magicLinkParams, mockConfig));
+      const { result } = renderHook(() =>
+        useOAuthCallback(magicLinkParams, mockConfig)
+      );
 
       await waitFor(() => {
         expect(result.current.status).toBe('success');
@@ -106,7 +113,9 @@ describe('useOAuthCallback', () => {
 
       mockAdapter.handleCallback.mockResolvedValue(mockResult as any);
 
-      const { result } = renderHook(() => useOAuthCallback(errorParams, mockConfig));
+      const { result } = renderHook(() =>
+        useOAuthCallback(errorParams, mockConfig)
+      );
 
       await waitFor(() => {
         expect(result.current.status).toBe('error');
@@ -117,7 +126,9 @@ describe('useOAuthCallback', () => {
     it('should handle network errors', async () => {
       mockAdapter.handleCallback.mockRejectedValue(new Error('Network error'));
 
-      const { result } = renderHook(() => useOAuthCallback(mockParams, mockConfig));
+      const { result } = renderHook(() =>
+        useOAuthCallback(mockParams, mockConfig)
+      );
 
       await waitFor(() => {
         expect(result.current.status).toBe('error');
@@ -126,9 +137,13 @@ describe('useOAuthCallback', () => {
     });
 
     it('should handle unknown errors', async () => {
-      mockAdapter.handleCallback.mockRejectedValue(new Error('An unknown error occurred'));
+      mockAdapter.handleCallback.mockRejectedValue(
+        new Error('An unknown error occurred')
+      );
 
-      const { result } = renderHook(() => useOAuthCallback(mockParams, mockConfig));
+      const { result } = renderHook(() =>
+        useOAuthCallback(mockParams, mockConfig)
+      );
 
       await waitFor(() => {
         expect(result.current.status).toBe('error');
@@ -147,7 +162,9 @@ describe('useOAuthCallback', () => {
 
       mockAdapter.handleCallback.mockResolvedValue(mockResult as any);
 
-      const { result } = renderHook(() => useOAuthCallback(emptyParams, mockConfig));
+      const { result } = renderHook(() =>
+        useOAuthCallback(emptyParams, mockConfig)
+      );
 
       await waitFor(() => {
         expect(result.current.status).toBe('error');
@@ -159,8 +176,10 @@ describe('useOAuthCallback', () => {
   describe('retry', () => {
     it('should reset status to processing and allow retry', async () => {
       // First attempt fails
-      mockAdapter.handleCallback.mockRejectedValueOnce(new Error('Network error'));
-      
+      mockAdapter.handleCallback.mockRejectedValueOnce(
+        new Error('Network error')
+      );
+
       // Second attempt succeeds
       const mockResult = {
         success: true,
@@ -168,7 +187,9 @@ describe('useOAuthCallback', () => {
       };
       mockAdapter.handleCallback.mockResolvedValueOnce(mockResult as any);
 
-      const { result } = renderHook(() => useOAuthCallback(mockParams, mockConfig));
+      const { result } = renderHook(() =>
+        useOAuthCallback(mockParams, mockConfig)
+      );
 
       // Wait for first attempt to fail
       await waitFor(() => {
@@ -203,7 +224,9 @@ describe('useOAuthCallback', () => {
 
       mockAdapter.handleCallback.mockResolvedValue(mockResult as any);
 
-      const { result } = renderHook(() => useOAuthCallback(complexParams, mockConfig));
+      const { result } = renderHook(() =>
+        useOAuthCallback(complexParams, mockConfig)
+      );
 
       await waitFor(() => {
         expect(result.current.status).toBe('success');
@@ -224,7 +247,9 @@ describe('useOAuthCallback', () => {
 
       mockAdapter.handleCallback.mockResolvedValue(mockResult as any);
 
-      const { result } = renderHook(() => useOAuthCallback(encodedParams, mockConfig));
+      const { result } = renderHook(() =>
+        useOAuthCallback(encodedParams, mockConfig)
+      );
 
       await waitFor(() => {
         expect(result.current.status).toBe('error');

@@ -1,14 +1,15 @@
 /**
  * Unistyles Integration Examples for OAuth Components
- * 
+ *
  * This file demonstrates how to integrate the OAuth components with react-native-unistyles
  * for theme-aware, responsive styling.
  */
 
-import React from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
-import { OAuthCallbackScreen } from './OAuthCallbackScreen';
-import type { ExpoOAuthConfig, OAuthCallbackParams } from '../types';
+// All imports are commented out since this is an example file
+// import React from 'react';
+// import { View, Text, ActivityIndicator } from 'react-native';
+// import { OAuthCallbackScreen } from './OAuthCallbackScreen';
+// import type { ExpoOAuthConfig, OAuthCallbackParams } from '../types';
 
 // Example: Using react-native-unistyles (pseudo-code since we don't have the actual dependency)
 // import { createStyleSheet, useStyles } from 'react-native-unistyles';

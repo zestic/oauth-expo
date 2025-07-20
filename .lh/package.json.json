@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1752836228560,
@@ -48,6 +48,10 @@
                 {
                     "date": 1753008712117,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -105,20 +105,8 @@\n     ],\n     \"testPathIgnorePatterns\": [\n       \"<rootDir>/src/__tests__/setup.ts\"\n     ],\n-    \"projects\": [\n-      {\n-        \"displayName\": \"unit\",\n-        \"testMatch\": [\"<rootDir>/src/__tests__/**/*.test.{ts,tsx}\"],\n-        \"testPathIgnorePatterns\": [\"<rootDir>/src/__tests__/integration/oauth-flow-isolated.test.ts\"]\n-      },\n-      {\n-        \"displayName\": \"integration-isolated\",\n-        \"testMatch\": [\"<rootDir>/src/__tests__/integration/oauth-flow-isolated.test.ts\"],\n-        \"maxWorkers\": 1\n-      }\n-    ],\n     \"transformIgnorePatterns\": [\n       \"node_modules/(?!(react-native|@react-native|expo-auth-session|expo-crypto|expo-linking|expo-constants|expo-application|expo-web-browser)/)\"\n     ],\n     \"collectCoverageFrom\": [\n"
+                },
+                {
+                    "date": 1753013473960,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     \"test\": \"jest\",\n     \"typecheck\": \"tsc\",\n     \"lint\": \"eslint \\\"**/*.{js,ts,tsx}\\\"\",\n     \"clean\": \"del-cli lib\",\n-    \"prepare\": \"bob build\",\n+    \"build\": \"bob build\",\n     \"release\": \"release-it --only-version\"\n   },\n   \"keywords\": [\n     \"react-native\",\n@@ -92,9 +92,9 @@\n   },\n   \"workspaces\": [\n     \"example\"\n   ],\n-  \"packageManager\": \"yarn@3.6.1\",\n+  \"packageManager\": \"yarn@4.9.2\",\n   \"jest\": {\n     \"preset\": \"react-native\",\n     \"setupFilesAfterEnv\": [\n       \"<rootDir>/src/__tests__/setup.ts\"\n"
                 }
             ],
             "date": 1752836228560,

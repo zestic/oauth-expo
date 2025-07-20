@@ -1,6 +1,10 @@
 import { OAuthCore } from '@zestic/oauth-core';
 import { ExpoOAuthAdapter } from '../ExpoOAuthAdapter';
-import { ExpoStorageAdapter, ExpoHttpAdapter, ExpoPKCEAdapter } from '../adapters';
+import {
+  ExpoStorageAdapter,
+  ExpoHttpAdapter,
+  ExpoPKCEAdapter,
+} from '../adapters';
 import type { ExpoOAuthConfig, OAuthCallbackParams } from '../types';
 
 // Mock the adapters
@@ -14,9 +18,15 @@ jest.mock('@zestic/oauth-core', () => ({
 }));
 
 const MockedOAuthCore = OAuthCore as jest.MockedClass<typeof OAuthCore>;
-const MockedExpoStorageAdapter = ExpoStorageAdapter as jest.MockedClass<typeof ExpoStorageAdapter>;
-const MockedExpoHttpAdapter = ExpoHttpAdapter as jest.MockedClass<typeof ExpoHttpAdapter>;
-const MockedExpoPKCEAdapter = ExpoPKCEAdapter as jest.MockedClass<typeof ExpoPKCEAdapter>;
+const MockedExpoStorageAdapter = ExpoStorageAdapter as jest.MockedClass<
+  typeof ExpoStorageAdapter
+>;
+const MockedExpoHttpAdapter = ExpoHttpAdapter as jest.MockedClass<
+  typeof ExpoHttpAdapter
+>;
+const MockedExpoPKCEAdapter = ExpoPKCEAdapter as jest.MockedClass<
+  typeof ExpoPKCEAdapter
+>;
 
 describe('ExpoOAuthAdapter', () => {
   let adapter: ExpoOAuthAdapter;
@@ -121,7 +131,8 @@ describe('ExpoOAuthAdapter', () => {
         expect.any(URLSearchParams)
       );
 
-      const urlParams = mockOAuthCore.handleCallback.mock.calls[0]?.[0] as URLSearchParams;
+      const urlParams = mockOAuthCore.handleCallback.mock
+        .calls[0]?.[0] as URLSearchParams;
       expect(urlParams.get('code')).toBe('auth-code-123');
       expect(urlParams.get('state')).toBe('state-456');
 
@@ -144,7 +155,8 @@ describe('ExpoOAuthAdapter', () => {
 
       const result = await adapter.handleCallback(callbackParams);
 
-      const urlParams = mockOAuthCore.handleCallback.mock.calls[0]?.[0] as URLSearchParams;
+      const urlParams = mockOAuthCore.handleCallback.mock
+        .calls[0]?.[0] as URLSearchParams;
       expect(urlParams.get('token')).toBe('magic-link-token');
       expect(urlParams.get('magic_link_token')).toBe('magic-token-123');
       expect(urlParams.get('flow')).toBe('magic_link');
@@ -168,7 +180,8 @@ describe('ExpoOAuthAdapter', () => {
 
       const result = await adapter.handleCallback(callbackParams);
 
-      const urlParams = mockOAuthCore.handleCallback.mock.calls[0]?.[0] as URLSearchParams;
+      const urlParams = mockOAuthCore.handleCallback.mock
+        .calls[0]?.[0] as URLSearchParams;
       expect(urlParams.get('error')).toBe('access_denied');
       expect(urlParams.get('error_description')).toBe('User denied access');
 
@@ -186,7 +199,8 @@ describe('ExpoOAuthAdapter', () => {
 
       await adapter.handleCallback(callbackParams);
 
-      const urlParams = mockOAuthCore.handleCallback.mock.calls[0][0] as URLSearchParams;
+      const urlParams = mockOAuthCore.handleCallback.mock
+        .calls[0][0] as URLSearchParams;
       expect(urlParams.get('code')).toBe('auth-code-123');
       expect(urlParams.has('state')).toBe(false);
       expect(urlParams.has('error')).toBe(false);
@@ -219,9 +233,13 @@ describe('ExpoOAuthAdapter', () => {
     });
 
     it('should handle PKCE generation errors from OAuthCore', async () => {
-      mockOAuthCore.generatePKCEChallenge.mockRejectedValue(new Error('PKCE generation failed'));
+      mockOAuthCore.generatePKCEChallenge.mockRejectedValue(
+        new Error('PKCE generation failed')
+      );
 
-      await expect(adapter.generatePKCEParams()).rejects.toThrow('PKCE generation failed');
+      await expect(adapter.generatePKCEParams()).rejects.toThrow(
+        'PKCE generation failed'
+      );
     });
 
     it('should handle state generation errors from OAuthCore', async () => {
@@ -232,9 +250,13 @@ describe('ExpoOAuthAdapter', () => {
       };
 
       mockOAuthCore.generatePKCEChallenge.mockResolvedValue(mockChallenge);
-      mockOAuthCore.generateState.mockRejectedValue(new Error('State generation failed'));
+      mockOAuthCore.generateState.mockRejectedValue(
+        new Error('State generation failed')
+      );
 
-      await expect(adapter.generatePKCEParams()).rejects.toThrow('State generation failed');
+      await expect(adapter.generatePKCEParams()).rejects.toThrow(
+        'State generation failed'
+      );
     });
   });
 
@@ -249,7 +271,9 @@ describe('ExpoOAuthAdapter', () => {
 
       const result = await adapter.generateAuthorizationUrl();
 
-      expect(mockOAuthCore.generateAuthorizationUrl).toHaveBeenCalledWith(undefined);
+      expect(mockOAuthCore.generateAuthorizationUrl).toHaveBeenCalledWith(
+        undefined
+      );
       expect(result).toEqual(mockResult);
     });
 
@@ -268,14 +292,20 @@ describe('ExpoOAuthAdapter', () => {
 
       const result = await adapter.generateAuthorizationUrl(additionalParams);
 
-      expect(mockOAuthCore.generateAuthorizationUrl).toHaveBeenCalledWith(additionalParams);
+      expect(mockOAuthCore.generateAuthorizationUrl).toHaveBeenCalledWith(
+        additionalParams
+      );
       expect(result).toEqual(mockResult);
     });
 
     it('should handle OAuthCore errors', async () => {
-      mockOAuthCore.generateAuthorizationUrl.mockRejectedValue(new Error('URL generation failed'));
+      mockOAuthCore.generateAuthorizationUrl.mockRejectedValue(
+        new Error('URL generation failed')
+      );
 
-      await expect(adapter.generateAuthorizationUrl()).rejects.toThrow('URL generation failed');
+      await expect(adapter.generateAuthorizationUrl()).rejects.toThrow(
+        'URL generation failed'
+      );
     });
 
     it('should handle empty additional parameters', async () => {
@@ -353,7 +383,9 @@ describe('ExpoOAuthAdapter', () => {
     });
 
     it('should handle storage errors during logout', async () => {
-      mockStorageAdapter.clearOAuthStorage.mockRejectedValue(new Error('Clear storage failed'));
+      mockStorageAdapter.clearOAuthStorage.mockRejectedValue(
+        new Error('Clear storage failed')
+      );
 
       await expect(adapter.logout()).rejects.toThrow('Clear storage failed');
     });

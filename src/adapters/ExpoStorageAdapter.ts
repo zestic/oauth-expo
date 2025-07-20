@@ -34,7 +34,9 @@ export class ExpoStorageAdapter implements StorageAdapter {
     try {
       await AsyncStorage.multiRemove(keys);
     } catch (error) {
-      throw new Error(`Failed to remove items with keys "${keys.join(', ')}": ${error}`);
+      throw new Error(
+        `Failed to remove items with keys "${keys.join(', ')}": ${error}`
+      );
     }
   }
 
@@ -75,7 +77,7 @@ export class ExpoStorageAdapter implements StorageAdapter {
     }
 
     if (tokens.expiresIn) {
-      const expiresAt = Date.now() + (tokens.expiresIn * 1000);
+      const expiresAt = Date.now() + tokens.expiresIn * 1000;
       await this.setItem('token_expiry', expiresAt.toString());
     }
 
@@ -93,12 +95,13 @@ export class ExpoStorageAdapter implements StorageAdapter {
     tokenType?: string;
   }> {
     // Use the same keys as oauth-core TokenManager
-    const [accessToken, refreshToken, expiresAtStr, tokenType] = await Promise.all([
-      this.getItem('access_token'),
-      this.getItem('refresh_token'),
-      this.getItem('token_expiry'),
-      this.getItem('token_type'),
-    ]);
+    const [accessToken, refreshToken, expiresAtStr, tokenType] =
+      await Promise.all([
+        this.getItem('access_token'),
+        this.getItem('refresh_token'),
+        this.getItem('token_expiry'),
+        this.getItem('token_type'),
+      ]);
 
     const expiresAt = expiresAtStr ? parseInt(expiresAtStr, 10) : null;
 

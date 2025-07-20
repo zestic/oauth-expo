@@ -5,11 +5,18 @@ import type { HttpAdapter, HttpResponse } from '@zestic/oauth-core';
  * Implements the oauth-core HttpAdapter interface
  */
 export class ExpoHttpAdapter implements HttpAdapter {
-  async post(url: string, data: Record<string, unknown>, headers?: Record<string, string>): Promise<HttpResponse> {
+  async post(
+    url: string,
+    data: Record<string, unknown>,
+    headers?: Record<string, string>
+  ): Promise<HttpResponse> {
     return this.makeRequest('POST', url, data, headers);
   }
 
-  async get(url: string, headers?: Record<string, string>): Promise<HttpResponse> {
+  async get(
+    url: string,
+    headers?: Record<string, string>
+  ): Promise<HttpResponse> {
     return this.makeRequest('GET', url, undefined, headers);
   }
 
@@ -36,7 +43,9 @@ export class ExpoHttpAdapter implements HttpAdapter {
       };
 
       if (data && method === 'POST') {
-        if (requestHeaders['Content-Type'] === 'application/x-www-form-urlencoded') {
+        if (
+          requestHeaders['Content-Type'] === 'application/x-www-form-urlencoded'
+        ) {
           // Convert data to URLSearchParams for form encoding
           const formData = new URLSearchParams();
           Object.entries(data).forEach(([key, value]) => {
@@ -75,5 +84,4 @@ export class ExpoHttpAdapter implements HttpAdapter {
       throw new Error(`Network request failed: ${error}`);
     }
   }
-
 }

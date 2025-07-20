@@ -42,11 +42,12 @@ describe('OAuth Flow - Isolated Integration Test', () => {
         ok: true,
         status: 200,
         headers: new Map([['content-type', 'application/json']]),
-        json: () => Promise.resolve({
-          access_token: 'access-token-123',
-          refresh_token: 'refresh-token-456',
-          expires_in: 3600,
-        }),
+        json: () =>
+          Promise.resolve({
+            access_token: 'access-token-123',
+            refresh_token: 'refresh-token-456',
+            expires_in: 3600,
+          }),
       };
       mockTokenResponse.headers.forEach = jest.fn((callback) => {
         callback('application/json', 'content-type');

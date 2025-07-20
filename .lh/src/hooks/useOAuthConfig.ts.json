@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1752840324219,
@@ -36,6 +36,10 @@
                 {
                     "date": 1752903108311,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,8 +100,9 @@\n   }, [config]);\n \n   return {\n     config,\n+    additionalParameters: options.additionalParameters,\n     generateAuthUrl,\n   };\n }\n \n"
+                },
+                {
+                    "date": 1753013719098,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -98,9 +98,9 @@\n         codeVerifier: pkceChallenge.codeVerifier,\n         state,\n       };\n     };\n-  }, [config]);\n+  }, [config, options.additionalParameters]);\n \n   return {\n     config,\n     additionalParameters: options.additionalParameters,\n"
                 }
             ],
             "date": 1752840324219,

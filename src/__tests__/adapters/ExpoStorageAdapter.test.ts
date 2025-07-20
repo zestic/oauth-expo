@@ -25,7 +25,10 @@ describe('ExpoStorageAdapter', () => {
 
       await adapter.setItem('test-key', 'test-value');
 
-      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith('test-key', 'test-value');
+      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith(
+        'test-key',
+        'test-value'
+      );
     });
 
     it('should throw error when storage fails', async () => {
@@ -91,7 +94,11 @@ describe('ExpoStorageAdapter', () => {
 
       await adapter.removeItems(['key1', 'key2', 'key3']);
 
-      expect(mockAsyncStorage.multiRemove).toHaveBeenCalledWith(['key1', 'key2', 'key3']);
+      expect(mockAsyncStorage.multiRemove).toHaveBeenCalledWith([
+        'key1',
+        'key2',
+        'key3',
+      ]);
     });
 
     it('should throw error when multi-removal fails', async () => {
@@ -132,8 +139,14 @@ describe('ExpoStorageAdapter', () => {
         accessToken: 'access-token-123',
       });
 
-      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith('access_token', 'access-token-123');
-      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith('token_type', 'Bearer');
+      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith(
+        'access_token',
+        'access-token-123'
+      );
+      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith(
+        'token_type',
+        'Bearer'
+      );
       expect(mockAsyncStorage.setItem).toHaveBeenCalledTimes(2);
     });
 
@@ -145,9 +158,18 @@ describe('ExpoStorageAdapter', () => {
         refreshToken: 'refresh-token-456',
       });
 
-      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith('access_token', 'access-token-123');
-      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith('refresh_token', 'refresh-token-456');
-      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith('token_type', 'Bearer');
+      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith(
+        'access_token',
+        'access-token-123'
+      );
+      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith(
+        'refresh_token',
+        'refresh-token-456'
+      );
+      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith(
+        'token_type',
+        'Bearer'
+      );
       expect(mockAsyncStorage.setItem).toHaveBeenCalledTimes(3);
     });
 
@@ -162,12 +184,24 @@ describe('ExpoStorageAdapter', () => {
         expiresIn: 3600, // 1 hour
       });
 
-      const expectedExpiresAt = mockDate.getTime() + (3600 * 1000);
+      const expectedExpiresAt = mockDate.getTime() + 3600 * 1000;
 
-      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith('access_token', 'access-token-123');
-      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith('refresh_token', 'refresh-token-456');
-      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith('token_expiry', expectedExpiresAt.toString());
-      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith('token_type', 'Bearer');
+      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith(
+        'access_token',
+        'access-token-123'
+      );
+      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith(
+        'refresh_token',
+        'refresh-token-456'
+      );
+      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith(
+        'token_expiry',
+        expectedExpiresAt.toString()
+      );
+      expect(mockAsyncStorage.setItem).toHaveBeenCalledWith(
+        'token_type',
+        'Bearer'
+      );
       expect(mockAsyncStorage.setItem).toHaveBeenCalledTimes(4);
     });
   });

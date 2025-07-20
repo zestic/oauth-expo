@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderHook, act } from '@testing-library/react-native';
 import { useOAuthConfig } from '../../hooks/useOAuthConfig';
 import { ExpoPKCEAdapter } from '../../adapters/ExpoPKCEAdapter';
@@ -6,7 +5,9 @@ import { ExpoPKCEAdapter } from '../../adapters/ExpoPKCEAdapter';
 // Mock the PKCE adapter
 jest.mock('../../adapters/ExpoPKCEAdapter');
 
-const MockedExpoPKCEAdapter = ExpoPKCEAdapter as jest.MockedClass<typeof ExpoPKCEAdapter>;
+const MockedExpoPKCEAdapter = ExpoPKCEAdapter as jest.MockedClass<
+  typeof ExpoPKCEAdapter
+>;
 
 describe('useOAuthConfig', () => {
   let mockPKCEAdapter: jest.Mocked<ExpoPKCEAdapter>;
@@ -121,7 +122,9 @@ describe('useOAuthConfig', () => {
       const url = new URL(authResult.authUrl);
       expect(url.searchParams.get('response_type')).toBe('code');
       expect(url.searchParams.get('client_id')).toBe('test-client-id');
-      expect(url.searchParams.get('redirect_uri')).toBe('myapp://oauth/callback');
+      expect(url.searchParams.get('redirect_uri')).toBe(
+        'myapp://oauth/callback'
+      );
       expect(url.searchParams.get('scope')).toBe('read write');
       expect(url.searchParams.get('state')).toBe('test-state');
       expect(url.searchParams.get('code_challenge')).toBe('test-challenge');
@@ -166,7 +169,9 @@ describe('useOAuthConfig', () => {
     });
 
     it('should handle PKCE generation errors', async () => {
-      mockPKCEAdapter.generateCodeChallenge.mockRejectedValue(new Error('PKCE generation failed'));
+      mockPKCEAdapter.generateCodeChallenge.mockRejectedValue(
+        new Error('PKCE generation failed')
+      );
 
       const { result } = renderHook(() =>
         useOAuthConfig({
@@ -179,7 +184,9 @@ describe('useOAuthConfig', () => {
       );
 
       await act(async () => {
-        await expect(result.current.generateAuthUrl()).rejects.toThrow('PKCE generation failed');
+        await expect(result.current.generateAuthUrl()).rejects.toThrow(
+          'PKCE generation failed'
+        );
       });
     });
 
@@ -191,7 +198,9 @@ describe('useOAuthConfig', () => {
       };
 
       mockPKCEAdapter.generateCodeChallenge.mockResolvedValue(mockChallenge);
-      mockPKCEAdapter.generateState.mockRejectedValue(new Error('State generation failed'));
+      mockPKCEAdapter.generateState.mockRejectedValue(
+        new Error('State generation failed')
+      );
 
       const { result } = renderHook(() =>
         useOAuthConfig({
@@ -204,7 +213,9 @@ describe('useOAuthConfig', () => {
       );
 
       await act(async () => {
-        await expect(result.current.generateAuthUrl()).rejects.toThrow('State generation failed');
+        await expect(result.current.generateAuthUrl()).rejects.toThrow(
+          'State generation failed'
+        );
       });
     });
   });
@@ -284,9 +295,13 @@ describe('useOAuthConfig', () => {
       });
 
       const url = new URL(authResult.authUrl);
-      expect(url.searchParams.get('state')).toBe('test-state-with-special-chars!@#$%');
+      expect(url.searchParams.get('state')).toBe(
+        'test-state-with-special-chars!@#$%'
+      );
       expect(url.searchParams.get('scope')).toBe('read write:special-scope');
-      expect(url.searchParams.get('custom_param')).toBe('value with spaces & symbols');
+      expect(url.searchParams.get('custom_param')).toBe(
+        'value with spaces & symbols'
+      );
     });
   });
 

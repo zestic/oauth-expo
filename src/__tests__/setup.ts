@@ -20,11 +20,13 @@ const createIsolatedStorage = () => {
       return Promise.resolve();
     }),
     multiRemove: jest.fn((keys: string[]) => {
-      keys.forEach(key => delete isolatedStorage[key]);
+      keys.forEach((key) => delete isolatedStorage[key]);
       return Promise.resolve();
     }),
     clear: jest.fn(() => {
-      Object.keys(isolatedStorage).forEach(key => delete isolatedStorage[key]);
+      Object.keys(isolatedStorage).forEach(
+        (key) => delete isolatedStorage[key]
+      );
       return Promise.resolve();
     }),
   };
@@ -43,18 +45,18 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
     return Promise.resolve();
   }),
   multiRemove: jest.fn((keys: string[]) => {
-    keys.forEach(key => delete mockStorage[key]);
+    keys.forEach((key) => delete mockStorage[key]);
     return Promise.resolve();
   }),
   clear: jest.fn(() => {
-    Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
+    Object.keys(mockStorage).forEach((key) => delete mockStorage[key]);
     return Promise.resolve();
   }),
 }));
 
 // Export functions to reset mock state for tests
 (global as any).clearMockStorage = () => {
-  Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
+  Object.keys(mockStorage).forEach((key) => delete mockStorage[key]);
 };
 
 (global as any).createIsolatedStorage = createIsolatedStorage;
@@ -94,7 +96,9 @@ jest.mock('expo-crypto', () => {
     }),
     digestStringAsync: jest.fn(() => {
       hashCounter++;
-      return Promise.resolve(`dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjX${hashCounter}=`);
+      return Promise.resolve(
+        `dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjX${hashCounter}=`
+      );
     }),
     CryptoDigestAlgorithm: {
       SHA256: 'SHA256',

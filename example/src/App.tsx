@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import {
-  ExpoOAuthAdapter,
-  useOAuthConfig,
-  OAuthCallbackScreen,
-  type ExpoOAuthConfig
-} from 'oauth-expo';
+import { ExpoOAuthAdapter, type ExpoOAuthConfig } from 'oauth-expo';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [oauthAdapter, setOAuthAdapter] = useState<ExpoOAuthAdapter | null>(null);
+  const [oauthAdapter, setOAuthAdapter] = useState<ExpoOAuthAdapter | null>(
+    null
+  );
 
   // Example OAuth configuration
-  const config: ExpoOAuthConfig = {
-    clientId: 'demo-client-id',
-    endpoints: {
-      authorization: 'https://demo-oauth.example.com/oauth/authorize',
-      token: 'https://demo-oauth.example.com/oauth/token',
-      revocation: 'https://demo-oauth.example.com/oauth/revoke',
-    },
-    redirectUri: 'oauth-expo-example://auth/callback',
-    scopes: ['read', 'write'],
-    scheme: 'oauth-expo-example',
-    path: 'auth/callback',
-  };
+  const config: ExpoOAuthConfig = useMemo(
+    () => ({
+      clientId: 'demo-client-id',
+      endpoints: {
+        authorization: 'https://demo-oauth.example.com/oauth/authorize',
+        token: 'https://demo-oauth.example.com/oauth/token',
+        revocation: 'https://demo-oauth.example.com/oauth/revoke',
+      },
+      redirectUri: 'oauth-expo-example://auth/callback',
+      scopes: ['read', 'write'],
+      scheme: 'oauth-expo-example',
+      path: 'auth/callback',
+    }),
+    []
+  );
 
   useEffect(() => {
     const adapter = new ExpoOAuthAdapter(config);
     setOAuthAdapter(adapter);
 
     // Check if user is already authenticated
-    adapter.isAuthenticated().then(authenticated => {
+    adapter.isAuthenticated().then((authenticated) => {
       setIsAuthenticated(authenticated);
       setIsLoading(false);
     });
-  }, []);
+  }, [config]);
 
   const handleLogin = async () => {
     if (!oauthAdapter) return;
@@ -48,12 +48,13 @@ export default function App() {
       Alert.alert(
         'OAuth Demo',
         `In a real app, this would open:\n${authResult.authUrl.substring(0, 100)}...`,
-        [
-          { text: 'OK' }
-        ]
+        [{ text: 'OK' }]
       );
     } catch (error) {
-      Alert.alert('Error', error instanceof Error ? error.message : 'Unknown error');
+      Alert.alert(
+        'Error',
+        error instanceof Error ? error.message : 'Unknown error'
+      );
     }
   };
 
@@ -65,7 +66,10 @@ export default function App() {
       setIsAuthenticated(false);
       Alert.alert('Success', 'Logged out successfully');
     } catch (error) {
-      Alert.alert('Error', error instanceof Error ? error.message : 'Unknown error');
+      Alert.alert(
+        'Error',
+        error instanceof Error ? error.message : 'Unknown error'
+      );
     }
   };
 

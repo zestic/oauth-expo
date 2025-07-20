@@ -224,8 +224,8 @@ describe('ExpoHttpAdapter', () => {
       mockFetch.mockResolvedValue(mockResponse as any);
 
       await adapter.get('https://api.example.com/user', {
-        'Authorization': 'Bearer token123',
-        'Accept': 'application/vnd.api+json',
+        Authorization: 'Bearer token123',
+        Accept: 'application/vnd.api+json',
       });
 
       expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/user', {
@@ -241,9 +241,9 @@ describe('ExpoHttpAdapter', () => {
     it('should handle GET request errors', async () => {
       mockFetch.mockRejectedValue(new Error('Request failed'));
 
-      await expect(
-        adapter.get('https://api.example.com/user')
-      ).rejects.toThrow('Network request failed: Error: Request failed');
+      await expect(adapter.get('https://api.example.com/user')).rejects.toThrow(
+        'Network request failed: Error: Request failed'
+      );
     });
   });
 });

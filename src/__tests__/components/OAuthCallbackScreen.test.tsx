@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import { OAuthCallbackScreen } from '../../components/OAuthCallbackScreen';
 import { useOAuthCallback } from '../../hooks/useOAuthCallback';
 import type { ExpoOAuthConfig } from '../../types';
@@ -7,7 +7,9 @@ import type { ExpoOAuthConfig } from '../../types';
 // Mock the hook
 jest.mock('../../hooks/useOAuthCallback');
 
-const mockUseOAuthCallback = useOAuthCallback as jest.MockedFunction<typeof useOAuthCallback>;
+const mockUseOAuthCallback = useOAuthCallback as jest.MockedFunction<
+  typeof useOAuthCallback
+>;
 
 describe('OAuthCallbackScreen', () => {
   const mockConfig: ExpoOAuthConfig = {
@@ -369,7 +371,9 @@ describe('OAuthCallbackScreen', () => {
       );
 
       const retryButton = getByTestId('oauth-callback-retry-button');
-      expect(retryButton.props.accessibilityLabel).toBe('Retry OAuth authentication');
+      expect(retryButton.props.accessibilityLabel).toBe(
+        'Retry OAuth authentication'
+      );
       expect(retryButton.props.accessibilityRole).toBe('button');
     });
   });
@@ -385,10 +389,7 @@ describe('OAuthCallbackScreen', () => {
 
       expect(() =>
         render(
-          <OAuthCallbackScreen
-            config={mockConfig}
-            onError={mockOnError}
-          />
+          <OAuthCallbackScreen config={mockConfig} onError={mockOnError} />
         )
       ).not.toThrow();
     });
@@ -403,10 +404,7 @@ describe('OAuthCallbackScreen', () => {
 
       expect(() =>
         render(
-          <OAuthCallbackScreen
-            config={mockConfig}
-            onSuccess={mockOnSuccess}
-          />
+          <OAuthCallbackScreen config={mockConfig} onSuccess={mockOnSuccess} />
         )
       ).not.toThrow();
     });

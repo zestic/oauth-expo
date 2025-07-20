@@ -2,20 +2,17 @@
 export { ExpoOAuthAdapter } from './ExpoOAuthAdapter';
 
 // Adapters
-export { 
-  ExpoStorageAdapter, 
-  ExpoHttpAdapter, 
-  ExpoPKCEAdapter 
+export {
+  ExpoStorageAdapter,
+  ExpoHttpAdapter,
+  ExpoPKCEAdapter,
 } from './adapters';
 
 // Components
 export { OAuthCallbackScreen } from './components';
 
 // Hooks
-export { 
-  useOAuthCallback, 
-  useOAuthConfig 
-} from './hooks';
+export { useOAuthCallback, useOAuthConfig } from './hooks';
 
 // Types - Import core types from oauth-core and Expo-specific types from local types
 export type {

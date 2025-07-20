@@ -1,5 +1,9 @@
 import { ExpoOAuthAdapter } from '../../ExpoOAuthAdapter';
-import { ExpoStorageAdapter, ExpoHttpAdapter, ExpoPKCEAdapter } from '../../adapters';
+import {
+  ExpoStorageAdapter,
+  ExpoHttpAdapter,
+  ExpoPKCEAdapter,
+} from '../../adapters';
 import type { ExpoOAuthConfig } from '../../types';
 
 // Integration tests that test the full OAuth flow without mocking internal components
@@ -90,7 +94,6 @@ describe('OAuth Flow Integration Tests', () => {
 
     it('should handle token expiration correctly', async () => {
       // Store expired token
-      const expiredTime = Date.now() - 1000;
       await storageAdapter.storeTokens({
         accessToken: 'expired-token',
         expiresIn: -1, // Already expired
@@ -235,18 +238,24 @@ describe('OAuth Flow Integration Tests', () => {
     it('should handle storage errors gracefully', async () => {
       // Mock AsyncStorage directly to trigger the error handling in our adapter
       const AsyncStorage = require('@react-native-async-storage/async-storage');
-      jest.spyOn(AsyncStorage, 'setItem').mockRejectedValueOnce(new Error('Storage full'));
+      jest
+        .spyOn(AsyncStorage, 'setItem')
+        .mockRejectedValueOnce(new Error('Storage full'));
 
       await expect(
         storageAdapter.setItem('test-key', 'test-value')
-      ).rejects.toThrow('Failed to store item with key "test-key": Error: Storage full');
+      ).rejects.toThrow(
+        'Failed to store item with key "test-key": Error: Storage full'
+      );
 
       // Restore the mock
       AsyncStorage.setItem.mockRestore();
     });
 
     it('should handle network errors gracefully', async () => {
-      (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
+      (global.fetch as jest.Mock).mockRejectedValueOnce(
+        new Error('Network error')
+      );
 
       await expect(
         httpAdapter.post('https://api.example.com/token', {})
@@ -256,9 +265,13 @@ describe('OAuth Flow Integration Tests', () => {
     it('should handle PKCE generation errors gracefully', async () => {
       // Mock crypto error
       const mockCrypto = require('expo-crypto');
-      mockCrypto.digestStringAsync.mockRejectedValueOnce(new Error('Crypto error'));
+      mockCrypto.digestStringAsync.mockRejectedValueOnce(
+        new Error('Crypto error')
+      );
 
-      await expect(pkceAdapter.generateCodeChallenge()).rejects.toThrow('Crypto error');
+      await expect(pkceAdapter.generateCodeChallenge()).rejects.toThrow(
+        'Crypto error'
+      );
     });
   });
 
@@ -290,11 +303,12 @@ describe('OAuth Flow Integration Tests', () => {
         ok: true,
         status: 200,
         headers: new Map([['content-type', 'application/json']]),
-        json: () => Promise.resolve({
-          access_token: 'access-token-123',
-          refresh_token: 'refresh-token-456',
-          expires_in: 3600,
-        }),
+        json: () =>
+          Promise.resolve({
+            access_token: 'access-token-123',
+            refresh_token: 'refresh-token-456',
+            expires_in: 3600,
+          }),
       };
       mockTokenResponse.headers.forEach = jest.fn((callback) => {
         callback('application/json', 'content-type');

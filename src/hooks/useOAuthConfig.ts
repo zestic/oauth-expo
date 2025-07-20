@@ -43,7 +43,9 @@ export interface UseOAuthConfigResult {
  * React hook for creating OAuth configuration
  * Generates Expo-compatible OAuth configuration with proper redirect URIs
  */
-export function useOAuthConfig(options: UseOAuthConfigOptions): UseOAuthConfigResult {
+export function useOAuthConfig(
+  options: UseOAuthConfigOptions
+): UseOAuthConfigResult {
   const config = useMemo((): ExpoOAuthConfig => {
     return {
       clientId: options.clientId,
@@ -97,7 +99,7 @@ export function useOAuthConfig(options: UseOAuthConfigOptions): UseOAuthConfigRe
         state,
       };
     };
-  }, [config]);
+  }, [config, options.additionalParameters]);
 
   return {
     config,

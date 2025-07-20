@@ -1,12 +1,16 @@
 import { OAuthCore } from '@zestic/oauth-core';
-import { ExpoStorageAdapter, ExpoHttpAdapter, ExpoPKCEAdapter } from './adapters';
-import type { 
-  ExpoOAuthConfig, 
-  OAuthCallbackParams, 
-  OAuthResult, 
+import {
+  ExpoStorageAdapter,
+  ExpoHttpAdapter,
+  ExpoPKCEAdapter,
+} from './adapters';
+import type {
+  ExpoOAuthConfig,
+  OAuthCallbackParams,
+  OAuthResult,
   PKCEParams,
   TokenData,
-  OAuthAdapters 
+  OAuthAdapters,
 } from './types';
 
 /**
@@ -40,7 +44,7 @@ export class ExpoOAuthAdapter {
   async handleCallback(params: OAuthCallbackParams): Promise<OAuthResult> {
     // Convert params to URLSearchParams, filtering out null/undefined values
     const urlParams = new URLSearchParams();
-    
+
     Object.entries(params).forEach(([key, value]) => {
       if (value !== null && value !== undefined) {
         urlParams.set(key, String(value));
@@ -54,7 +58,9 @@ export class ExpoOAuthAdapter {
    * Generate authorization URL with PKCE parameters
    * This method generates PKCE parameters internally and stores them for later use
    */
-  async generateAuthorizationUrl(additionalParams?: Record<string, string>): Promise<{ url: string; state: string }> {
+  async generateAuthorizationUrl(
+    additionalParams?: Record<string, string>
+  ): Promise<{ url: string; state: string }> {
     return this.oauthCore.generateAuthorizationUrl(additionalParams);
   }
 

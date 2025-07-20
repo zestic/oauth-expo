@@ -44,9 +44,12 @@ export function useOAuthCallback(
       }
     } catch (error) {
       setStatus('error');
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error occurred';
       setMessage(errorMessage);
-      options?.onError?.(error instanceof Error ? error : new Error(errorMessage));
+      options?.onError?.(
+        error instanceof Error ? error : new Error(errorMessage)
+      );
     }
   }, [params, config, options]);
 
@@ -68,5 +71,3 @@ export function useOAuthCallback(
     retry,
   };
 }
-
-
