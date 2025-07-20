@@ -40,9 +40,12 @@ describe('useOAuthConfig', () => {
         endpoints: {
           authorization: 'https://auth.example.com/authorize',
           token: 'https://auth.example.com/token',
+          revocation: '',
         },
         redirectUri: 'myapp://oauth/callback',
         scopes: ['read', 'write'],
+        scheme: 'oauth-expo',
+        path: 'callback',
       });
     });
 
@@ -68,6 +71,7 @@ describe('useOAuthConfig', () => {
         endpoints: {
           authorization: 'https://auth.example.com/authorize',
           token: 'https://auth.example.com/token',
+          revocation: '',
         },
         redirectUri: 'myapp://oauth/callback',
         scopes: ['read', 'write'],

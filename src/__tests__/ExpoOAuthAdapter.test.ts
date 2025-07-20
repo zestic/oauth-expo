@@ -107,7 +107,7 @@ describe('ExpoOAuthAdapter', () => {
           http: mockHttpAdapter,
           pkce: mockPKCEAdapter,
         },
-        undefined
+        ['authorization_code']
       );
     });
   });

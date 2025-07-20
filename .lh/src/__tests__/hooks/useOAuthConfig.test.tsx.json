@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1753013592812,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753031035119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,4 @@\n-\n import { renderHook, act } from '@testing-library/react-native';\n import { useOAuthConfig } from '../../hooks/useOAuthConfig';\n import { ExpoPKCEAdapter } from '../../adapters/ExpoPKCEAdapter';\n \n@@ -40,11 +39,14 @@\n         clientId: 'test-client-id',\n         endpoints: {\n           authorization: 'https://auth.example.com/authorize',\n           token: 'https://auth.example.com/token',\n+          revocation: '',\n         },\n         redirectUri: 'myapp://oauth/callback',\n         scopes: ['read', 'write'],\n+        scheme: 'oauth-expo',\n+        path: 'callback',\n       });\n     });\n \n     it('should include optional parameters when provided', () => {\n"
+                },
+                {
+                    "date": 1753031052913,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,8 +70,9 @@\n         clientId: 'test-client-id',\n         endpoints: {\n           authorization: 'https://auth.example.com/authorize',\n           token: 'https://auth.example.com/token',\n+          revocation: '',\n         },\n         redirectUri: 'myapp://oauth/callback',\n         scopes: ['read', 'write'],\n         scheme: 'myapp',\n"
                 }
             ],
             "date": 1753013592812,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 17,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1752917291502,
@@ -76,6 +76,10 @@
                 {
                     "date": 1753027893816,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,8 +39,9 @@\n     clientId: 'test-client-id',\n     endpoints: {\n       authorization: 'https://auth.example.com/authorize',\n       token: 'https://auth.example.com/token',\n+      revocation: 'https://auth.example.com/revoke',\n     },\n     redirectUri: 'myapp://oauth/callback',\n     scopes: ['read', 'write'],\n     scheme: 'myapp',\n"
+                },
+                {
+                    "date": 1753031017335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -106,9 +106,9 @@\n           storage: mockStorageAdapter,\n           http: mockHttpAdapter,\n           pkce: mockPKCEAdapter,\n         },\n-        undefined\n+        ['authorization_code']\n       );\n     });\n   });\n \n"
                 }
             ],
             "date": 1752917291502,
