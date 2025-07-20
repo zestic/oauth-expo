@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import { OAuthCallbackScreen } from '../../components/OAuthCallbackScreen';
 import { useOAuthCallback } from '../../hooks/useOAuthCallback';
@@ -17,9 +16,12 @@ describe('OAuthCallbackScreen', () => {
     endpoints: {
       authorization: 'https://auth.example.com/authorize',
       token: 'https://auth.example.com/token',
+      revocation: 'https://auth.example.com/revoke',
     },
     redirectUri: 'myapp://oauth/callback',
     scopes: ['read', 'write'],
+    scheme: 'myapp',
+    path: 'oauth/callback',
   };
 
   const mockOnSuccess = jest.fn();

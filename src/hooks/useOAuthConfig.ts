@@ -52,12 +52,12 @@ export function useOAuthConfig(
       endpoints: {
         authorization: options.authorizationEndpoint,
         token: options.tokenEndpoint,
-        revocation: options.revocationEndpoint,
+        revocation: options.revocationEndpoint || '',
       },
       redirectUri: options.redirectUri,
       scopes: options.scopes || ['read', 'write'],
-      scheme: options.scheme,
-      path: options.path,
+      scheme: options.scheme || 'oauth-expo',
+      path: options.path || 'callback',
     };
   }, [
     options.clientId,
@@ -82,9 +82,9 @@ export function useOAuthConfig(
       // Build authorization URL
       const params = new URLSearchParams({
         response_type: 'code',
-        client_id: config.clientId,
-        redirect_uri: config.redirectUri,
-        scope: config.scopes.join(' '),
+        client_id: options.clientId,
+        redirect_uri: options.redirectUri,
+        scope: (options.scopes || []).join(' '),
         state,
         code_challenge: pkceChallenge.codeChallenge,
         code_challenge_method: pkceChallenge.codeChallengeMethod,
@@ -99,7 +99,13 @@ export function useOAuthConfig(
         state,
       };
     };
-  }, [config, options.additionalParameters]);
+  }, [
+    config,
+    options.additionalParameters,
+    options.clientId,
+    options.redirectUri,
+    options.scopes,
+  ]);
 
   return {
     config,
@@ -147,7 +153,7 @@ export function useOAuthConfigFromEnv(options?: {
       endpoints,
       redirectUri,
       scopes: options?.scopes || ['read', 'write'],
-      scheme: options?.scheme,
+      scheme: options?.scheme || 'oauth-expo',
       path: options?.path || 'auth/callback',
     };
   }, [options?.scheme, options?.path, options?.scopes]);

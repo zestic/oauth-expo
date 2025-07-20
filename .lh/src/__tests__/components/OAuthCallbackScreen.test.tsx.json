@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1752904218550,
@@ -28,6 +28,14 @@
                 {
                     "date": 1753013605252,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,16 @@\n import React from 'react';\n-import { render, fireEvent, waitFor } from '@testing-library/react-native';\n+import { render, fireEvent } from '@testing-library/react-native';\n import { OAuthCallbackScreen } from '../../components/OAuthCallbackScreen';\n import { useOAuthCallback } from '../../hooks/useOAuthCallback';\n import type { ExpoOAuthConfig } from '../../types';\n \n // Mock the hook\n jest.mock('../../hooks/useOAuthCallback');\n \n-const mockUseOAuthCallback = useOAuthCallback as jest.MockedFunction<typeof useOAuthCallback>;\n+const mockUseOAuthCallback = useOAuthCallback as jest.MockedFunction<\n+  typeof useOAuthCallback\n+>;\n \n describe('OAuthCallbackScreen', () => {\n   const mockConfig: ExpoOAuthConfig = {\n     clientId: 'test-client-id',\n@@ -368,9 +370,11 @@\n         />\n       );\n \n       const retryButton = getByTestId('oauth-callback-retry-button');\n-      expect(retryButton.props.accessibilityLabel).toBe('Retry OAuth authentication');\n+      expect(retryButton.props.accessibilityLabel).toBe(\n+        'Retry OAuth authentication'\n+      );\n       expect(retryButton.props.accessibilityRole).toBe('button');\n     });\n   });\n \n@@ -384,12 +388,9 @@\n       });\n \n       expect(() =>\n         render(\n-          <OAuthCallbackScreen\n-            config={mockConfig}\n-            onError={mockOnError}\n-          />\n+          <OAuthCallbackScreen config={mockConfig} onError={mockOnError} />\n         )\n       ).not.toThrow();\n     });\n \n@@ -402,12 +403,9 @@\n       });\n \n       expect(() =>\n         render(\n-          <OAuthCallbackScreen\n-            config={mockConfig}\n-            onSuccess={mockOnSuccess}\n-          />\n+          <OAuthCallbackScreen config={mockConfig} onSuccess={mockOnSuccess} />\n         )\n       ).not.toThrow();\n     });\n   });\n"
+                },
+                {
+                    "date": 1753027312865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import React from 'react';\n+\n import { render, fireEvent } from '@testing-library/react-native';\n import { OAuthCallbackScreen } from '../../components/OAuthCallbackScreen';\n import { useOAuthCallback } from '../../hooks/useOAuthCallback';\n import type { ExpoOAuthConfig } from '../../types';\n"
+                },
+                {
+                    "date": 1753027572671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,14 @@\n     clientId: 'test-client-id',\n     endpoints: {\n       authorization: 'https://auth.example.com/authorize',\n       token: 'https://auth.example.com/token',\n+      revocation: 'https://auth.example.com/revoke',\n     },\n     redirectUri: 'myapp://oauth/callback',\n     scopes: ['read', 'write'],\n+    scheme: 'myapp',\n+    path: 'oauth/callback',\n   };\n \n   const mockOnSuccess = jest.fn();\n   const mockOnError = jest.fn();\n"
                 }
             ],
             "date": 1752904218550,

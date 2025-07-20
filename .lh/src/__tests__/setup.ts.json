@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1752841455579,
@@ -56,6 +56,10 @@
                 {
                     "date": 1753008671117,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,8 +56,10 @@\n (global as any).clearMockStorage = () => {\n   Object.keys(mockStorage).forEach(key => delete mockStorage[key]);\n };\n \n+(global as any).createIsolatedStorage = createIsolatedStorage;\n+\n (global as any).resetMockCrypto = () => {\n   const mockCrypto = require('expo-crypto');\n   if (mockCrypto.resetCounters) {\n     mockCrypto.resetCounters();\n"
+                },
+                {
+                    "date": 1753028139121,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,13 +19,15 @@\n       delete isolatedStorage[key];\n       return Promise.resolve();\n     }),\n     multiRemove: jest.fn((keys: string[]) => {\n-      keys.forEach(key => delete isolatedStorage[key]);\n+      keys.forEach((key) => delete isolatedStorage[key]);\n       return Promise.resolve();\n     }),\n     clear: jest.fn(() => {\n-      Object.keys(isolatedStorage).forEach(key => delete isolatedStorage[key]);\n+      Object.keys(isolatedStorage).forEach(\n+        (key) => delete isolatedStorage[key]\n+      );\n       return Promise.resolve();\n     }),\n   };\n };\n@@ -42,20 +44,20 @@\n     delete mockStorage[key];\n     return Promise.resolve();\n   }),\n   multiRemove: jest.fn((keys: string[]) => {\n-    keys.forEach(key => delete mockStorage[key]);\n+    keys.forEach((key) => delete mockStorage[key]);\n     return Promise.resolve();\n   }),\n   clear: jest.fn(() => {\n-    Object.keys(mockStorage).forEach(key => delete mockStorage[key]);\n+    Object.keys(mockStorage).forEach((key) => delete mockStorage[key]);\n     return Promise.resolve();\n   }),\n }));\n \n // Export functions to reset mock state for tests\n (global as any).clearMockStorage = () => {\n-  Object.keys(mockStorage).forEach(key => delete mockStorage[key]);\n+  Object.keys(mockStorage).forEach((key) => delete mockStorage[key]);\n };\n \n (global as any).createIsolatedStorage = createIsolatedStorage;\n \n@@ -93,9 +95,11 @@\n       return `550e8400-e29b-41d4-a716-44665544000${uuidCounter}`;\n     }),\n     digestStringAsync: jest.fn(() => {\n       hashCounter++;\n-      return Promise.resolve(`dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjX${hashCounter}=`);\n+      return Promise.resolve(\n+        `dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjX${hashCounter}=`\n+      );\n     }),\n     CryptoDigestAlgorithm: {\n       SHA256: 'SHA256',\n     },\n@@ -104,9 +108,9 @@\n     },\n   };\n \n   // Add reset function to the mock\n-  mockCrypto.resetCounters = () => {\n+  (mockCrypto as any).resetCounters = () => {\n     uuidCounter = 0;\n     hashCounter = 0;\n   };\n \n"
                 }
             ],
             "date": 1752841455579,

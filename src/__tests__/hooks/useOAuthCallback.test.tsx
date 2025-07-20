@@ -20,6 +20,7 @@ describe('useOAuthCallback', () => {
     endpoints: {
       authorization: 'https://auth.example.com/authorize',
       token: 'https://auth.example.com/token',
+      revocation: 'https://auth.example.com/revoke',
     },
     redirectUri: 'myapp://oauth/callback',
     scopes: ['read', 'write'],

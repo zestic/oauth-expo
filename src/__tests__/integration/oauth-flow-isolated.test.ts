@@ -9,9 +9,12 @@ describe('OAuth Flow - Isolated Integration Test', () => {
     endpoints: {
       authorization: 'https://auth.example.com/authorize',
       token: 'https://auth.example.com/token',
+      revocation: 'https://auth.example.com/revoke',
     },
     redirectUri: 'myapp://oauth/callback',
     scopes: ['read', 'write'],
+    scheme: 'myapp',
+    path: 'oauth/callback',
   };
 
   // This test runs in isolation to avoid storage state pollution
@@ -50,7 +53,7 @@ describe('OAuth Flow - Isolated Integration Test', () => {
           }),
       };
       mockTokenResponse.headers.forEach = jest.fn((callback) => {
-        callback('application/json', 'content-type');
+        callback('application/json', 'content-type', mockTokenResponse.headers);
       });
       (global.fetch as jest.Mock).mockResolvedValueOnce(mockTokenResponse);
 

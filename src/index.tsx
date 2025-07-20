@@ -17,7 +17,6 @@ export { useOAuthCallback, useOAuthConfig } from './hooks';
 // Types - Import core types from oauth-core and Expo-specific types from local types
 export type {
   // Core types from oauth-core
-  OAuthConfig,
   OAuthAdapters,
   OAuthResult,
   StorageAdapter,
@@ -47,13 +46,13 @@ export type {
 import { ExpoOAuthAdapter } from './ExpoOAuthAdapter';
 import { OAuthCallbackScreen } from './components';
 import { useOAuthCallback, useOAuthConfig } from './hooks';
-import { OAuthError, OAUTH_ERROR_CODES } from './types';
+
+import { OAUTH_ERROR_CODES } from '@zestic/oauth-core';
 
 export default {
   ExpoOAuthAdapter,
   OAuthCallbackScreen,
   useOAuthCallback,
   useOAuthConfig,
-  OAuthError,
   OAUTH_ERROR_CODES,
 };

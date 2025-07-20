@@ -240,7 +240,7 @@ export function MinimalOAuthCallbackScreen({
   OAuthCallbackScreenProps,
   'params' | 'config' | 'onSuccess' | 'onError'
 >) {
-  useOAuthCallback(params, config, { onSuccess, onError });
+  useOAuthCallback(params || {}, config, { onSuccess, onError });
 
   return (
     <View style={minimalStyles.container}>
@@ -470,7 +470,7 @@ function getThemedStyles(
     },
     title: {
       fontSize: themeConfig.typography.h2.fontSize,
-      fontWeight: themeConfig.typography.h2.fontWeight,
+      fontWeight: themeConfig.typography.h2.fontWeight as any,
       color: themeConfig.colors.text,
       marginBottom: themeConfig.spacing.sm,
       textAlign: 'center' as const,
@@ -485,7 +485,7 @@ function getThemedStyles(
     buttonText: {
       color: '#ffffff',
       fontSize: themeConfig.typography.body.fontSize,
-      fontWeight: '600',
+      fontWeight: '600' as any,
       textAlign: 'center' as const,
     },
   };
@@ -498,12 +498,12 @@ function getThemedStyles(
         container: {
           flex: 1,
           backgroundColor: 'transparent',
-          justifyContent: 'center',
-          alignItems: 'center',
+          justifyContent: 'center' as const,
+          alignItems: 'center' as const,
           padding: themeConfig.spacing.md,
         },
         content: {
-          alignItems: 'center',
+          alignItems: 'center' as const,
           maxWidth: 280,
         },
         button: {
@@ -521,12 +521,12 @@ function getThemedStyles(
         container: {
           flex: 1,
           backgroundColor: themeConfig.colors.background,
-          justifyContent: 'center',
-          alignItems: 'center',
+          justifyContent: 'center' as const,
+          alignItems: 'center' as const,
           padding: themeConfig.spacing.lg,
         },
         content: {
-          alignItems: 'center',
+          alignItems: 'center' as const,
           maxWidth: 320,
           backgroundColor: themeConfig.colors.surface,
           padding: themeConfig.spacing.xl,
@@ -551,12 +551,12 @@ function getThemedStyles(
         container: {
           flex: 1,
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          justifyContent: 'center',
-          alignItems: 'center',
+          justifyContent: 'center' as const,
+          alignItems: 'center' as const,
           padding: themeConfig.spacing.lg,
         },
         content: {
-          alignItems: 'center',
+          alignItems: 'center' as const,
           maxWidth: 340,
           backgroundColor: themeConfig.colors.surface,
           padding: themeConfig.spacing.xl,
@@ -580,12 +580,12 @@ function getThemedStyles(
         container: {
           flex: 1,
           backgroundColor: themeConfig.colors.background,
-          justifyContent: 'center',
-          alignItems: 'center',
+          justifyContent: 'center' as const,
+          alignItems: 'center' as const,
           padding: themeConfig.spacing.lg,
         },
         content: {
-          alignItems: 'center',
+          alignItems: 'center' as const,
           maxWidth: 300,
         },
         button: {

@@ -20,7 +20,7 @@ describe('ExpoHttpAdapter', () => {
         json: jest.fn().mockResolvedValue({ success: true }),
       };
       mockResponse.headers.forEach = jest.fn((callback) => {
-        callback('application/json', 'content-type');
+        callback('application/json', 'content-type', mockResponse.headers);
       });
       mockFetch.mockResolvedValue(mockResponse as any);
 
@@ -55,7 +55,7 @@ describe('ExpoHttpAdapter', () => {
         json: jest.fn().mockResolvedValue({ access_token: 'token123' }),
       };
       mockResponse.headers.forEach = jest.fn((callback) => {
-        callback('application/json', 'content-type');
+        callback('application/json', 'content-type', mockResponse.headers);
       });
       mockFetch.mockResolvedValue(mockResponse as any);
 
@@ -93,7 +93,7 @@ describe('ExpoHttpAdapter', () => {
         text: jest.fn().mockResolvedValue('Success'),
       };
       mockResponse.headers.forEach = jest.fn((callback) => {
-        callback('text/plain', 'content-type');
+        callback('text/plain', 'content-type', mockResponse.headers);
       });
       mockFetch.mockResolvedValue(mockResponse as any);
 
@@ -115,7 +115,7 @@ describe('ExpoHttpAdapter', () => {
         json: jest.fn().mockResolvedValue({ id: 123 }),
       };
       mockResponse.headers.forEach = jest.fn((callback) => {
-        callback('application/json', 'content-type');
+        callback('application/json', 'content-type', mockResponse.headers);
       });
       mockFetch.mockResolvedValue(mockResponse as any);
 
@@ -155,7 +155,7 @@ describe('ExpoHttpAdapter', () => {
         json: jest.fn().mockResolvedValue({ success: true }),
       };
       mockResponse.headers.forEach = jest.fn((callback) => {
-        callback('application/json', 'content-type');
+        callback('application/json', 'content-type', mockResponse.headers);
       });
       mockFetch.mockResolvedValue(mockResponse as any);
 
@@ -191,7 +191,7 @@ describe('ExpoHttpAdapter', () => {
         json: jest.fn().mockResolvedValue({ data: 'test' }),
       };
       mockResponse.headers.forEach = jest.fn((callback) => {
-        callback('application/json', 'content-type');
+        callback('application/json', 'content-type', mockResponse.headers);
       });
       mockFetch.mockResolvedValue(mockResponse as any);
 
@@ -219,7 +219,7 @@ describe('ExpoHttpAdapter', () => {
         json: jest.fn().mockResolvedValue({ user: 'john' }),
       };
       mockResponse.headers.forEach = jest.fn((callback) => {
-        callback('application/json', 'content-type');
+        callback('application/json', 'content-type', mockResponse.headers);
       });
       mockFetch.mockResolvedValue(mockResponse as any);
 

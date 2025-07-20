@@ -109,7 +109,7 @@ jest.mock('expo-crypto', () => {
   };
 
   // Add reset function to the mock
-  mockCrypto.resetCounters = () => {
+  (mockCrypto as any).resetCounters = () => {
     uuidCounter = 0;
     hashCounter = 0;
   };

@@ -35,7 +35,9 @@ export class ExpoOAuthAdapter {
     };
 
     // Initialize OAuth core with config and adapters
-    this.oauthCore = new OAuthCore(config, adapters, config.flows);
+    // Default to authorization_code flow if no flows specified
+    const flows = (config as any).flows || ['authorization_code'];
+    this.oauthCore = new OAuthCore(config, adapters, flows);
   }
 
   /**

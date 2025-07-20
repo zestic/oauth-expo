@@ -18,9 +18,12 @@ describe('OAuth Flow Integration Tests', () => {
     endpoints: {
       authorization: 'https://auth.example.com/authorize',
       token: 'https://auth.example.com/token',
+      revocation: 'https://auth.example.com/revoke',
     },
     redirectUri: 'myapp://oauth/callback',
     scopes: ['read', 'write'],
+    scheme: 'myapp',
+    path: 'oauth/callback',
   };
 
   beforeEach(async () => {
@@ -139,7 +142,7 @@ describe('OAuth Flow Integration Tests', () => {
         json: () => Promise.resolve({ access_token: 'token-123' }),
       };
       mockResponse.headers.forEach = jest.fn((callback) => {
-        callback('application/json', 'content-type');
+        callback('application/json', 'content-type', mockResponse.headers);
       });
       (global.fetch as jest.Mock).mockResolvedValueOnce(mockResponse);
 
@@ -173,7 +176,7 @@ describe('OAuth Flow Integration Tests', () => {
         json: () => Promise.resolve({ user: 'john' }),
       };
       mockResponse.headers.forEach = jest.fn((callback) => {
-        callback('application/json', 'content-type');
+        callback('application/json', 'content-type', mockResponse.headers);
       });
       (global.fetch as jest.Mock).mockResolvedValueOnce(mockResponse);
 
@@ -311,7 +314,7 @@ describe('OAuth Flow Integration Tests', () => {
           }),
       };
       mockTokenResponse.headers.forEach = jest.fn((callback) => {
-        callback('application/json', 'content-type');
+        callback('application/json', 'content-type', mockTokenResponse.headers);
       });
       (global.fetch as jest.Mock).mockResolvedValueOnce(mockTokenResponse);
 

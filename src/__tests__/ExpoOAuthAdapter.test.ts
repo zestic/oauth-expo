@@ -40,6 +40,7 @@ describe('ExpoOAuthAdapter', () => {
     endpoints: {
       authorization: 'https://auth.example.com/authorize',
       token: 'https://auth.example.com/token',
+      revocation: 'https://auth.example.com/revoke',
     },
     redirectUri: 'myapp://oauth/callback',
     scopes: ['read', 'write'],
@@ -191,7 +192,6 @@ describe('ExpoOAuthAdapter', () => {
     it('should filter out null and undefined values', async () => {
       const callbackParams: OAuthCallbackParams = {
         code: 'auth-code-123',
-        state: null,
         error: undefined,
       };
 
@@ -200,7 +200,7 @@ describe('ExpoOAuthAdapter', () => {
       await adapter.handleCallback(callbackParams);
 
       const urlParams = mockOAuthCore.handleCallback.mock
-        .calls[0][0] as URLSearchParams;
+        .calls[0]?.[0] as URLSearchParams;
       expect(urlParams.get('code')).toBe('auth-code-123');
       expect(urlParams.has('state')).toBe(false);
       expect(urlParams.has('error')).toBe(false);

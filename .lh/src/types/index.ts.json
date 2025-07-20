@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1752853136608,
@@ -36,6 +36,26 @@
                 {
                     "date": 1752917966679,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,14 @@\n  */\n export interface ExpoOAuthConfig extends OAuthConfig {\n   scheme: string;\n   path: string;\n+  // Override endpoints to make revocation optional for Expo\n+  endpoints: {\n+    authorization: string;\n+    token: string;\n+    revocation?: string;\n+  };\n }\n \n /**\n  * OAuth callback parameters that can be received from various flows\n"
+                },
+                {
+                    "date": 1753027086821,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,18 +11,25 @@\n   PKCEChallenge,\n   TokenExchangeRequest,\n   TokenResponse,\n   OAuthError,\n-  OAuthErrorCode\n+  OAuthErrorCode,\n } from '@zestic/oauth-core';\n \n /**\n  * OAuth configuration for Expo applications\n  * Extends the core OAuthConfig with Expo-specific properties\n  */\n export interface ExpoOAuthConfig extends OAuthConfig {\n+  // Required OAuth properties\n+  clientId: string;\n+  redirectUri: string;\n+  scopes: string[];\n+\n+  // Expo-specific properties\n   scheme: string;\n   path: string;\n+\n   // Override endpoints to make revocation optional for Expo\n   endpoints: {\n     authorization: string;\n     token: string;\n@@ -36,19 +43,19 @@\n export interface OAuthCallbackParams {\n   // OAuth2 Authorization Code Flow\n   code?: string;\n   state?: string;\n-  \n+\n   // Magic Link Flow\n   token?: string;\n   magic_link_token?: string;\n   flow?: 'login' | 'registration' | 'magic_link';\n-  \n+\n   // Error parameters\n   error?: string;\n   error_description?: string;\n   error_uri?: string;\n-  \n+\n   // Additional parameters\n   [key: string]: string | null | undefined;\n }\n \n"
+                },
+                {
+                    "date": 1753027533373,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,6 @@\n // Import core types from oauth-core\n export type {\n-  OAuthConfig,\n   OAuthAdapters,\n   OAuthResult,\n   StorageAdapter,\n   HttpAdapter,\n@@ -14,8 +13,13 @@\n   OAuthError,\n   OAuthErrorCode,\n } from '@zestic/oauth-core';\n \n+export type {\n+  OAuthConfigOptions,\n+  OAuthEndpoints,\n+} from '@zestic/oauth-core';\n+\n /**\n  * OAuth configuration for Expo applications\n  * Extends the core OAuthConfig with Expo-specific properties\n  */\n"
+                },
+                {
+                    "date": 1753027545245,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n /**\n  * OAuth configuration for Expo applications\n  * Extends the core OAuthConfig with Expo-specific properties\n  */\n-export interface ExpoOAuthConfig extends OAuthConfig {\n+export interface ExpoOAuthConfig extends OAuthConfigOptions {\n   // Required OAuth properties\n   clientId: string;\n   redirectUri: string;\n   scopes: string[];\n"
+                },
+                {
+                    "date": 1753027557091,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n   // Override endpoints to make revocation optional for Expo\n   endpoints: {\n     authorization: string;\n     token: string;\n-    revocation?: string;\n+    revocation: string;\n   };\n }\n \n /**\n"
+                },
+                {
+                    "date": 1753028208441,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,7 @@\n // Import core types from oauth-core\n+import type { OAuthConfigOptions } from '@zestic/oauth-core';\n+\n export type {\n   OAuthAdapters,\n   OAuthResult,\n   StorageAdapter,\n@@ -11,11 +13,8 @@\n   TokenExchangeRequest,\n   TokenResponse,\n   OAuthError,\n   OAuthErrorCode,\n-} from '@zestic/oauth-core';\n-\n-export type {\n   OAuthConfigOptions,\n   OAuthEndpoints,\n } from '@zestic/oauth-core';\n \n"
                 }
             ],
             "date": 1752853136608,

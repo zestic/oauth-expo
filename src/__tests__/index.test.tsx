@@ -26,9 +26,12 @@ describe('oauth-expo exports', () => {
       endpoints: {
         authorization: 'https://auth.example.com/authorize',
         token: 'https://auth.example.com/token',
+        revocation: 'https://auth.example.com/revoke',
       },
       redirectUri: 'myapp://callback',
       scopes: ['read'],
+      scheme: 'myapp',
+      path: 'oauth/callback',
     };
 
     expect(config).toBeDefined();
@@ -44,9 +47,12 @@ describe('oauth-expo exports', () => {
       endpoints: {
         authorization: 'https://auth.example.com/authorize',
         token: 'https://auth.example.com/token',
+        revocation: 'https://auth.example.com/revoke',
       },
       redirectUri: 'myapp://callback',
       scopes: ['read'],
+      scheme: 'myapp',
+      path: 'oauth/callback',
     };
 
     expect(() => new OAuthExpo.ExpoOAuthAdapter(config)).not.toThrow();

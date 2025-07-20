@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 31,
             "patches": [
                 {
                     "date": 1752837555008,
@@ -88,6 +88,50 @@
                 {
                     "date": 1753013673537,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   OAuthResult,\n   OAuthTheme,\n   OAuthVariant,\n   OAuthThemeConfig,\n-  OAuthComponentOverrides\n+  OAuthComponentOverrides,\n } from '../types';\n \n /**\n  * Props for OAuthCallbackScreen component\n@@ -93,17 +93,13 @@\n }: OAuthCallbackScreenProps) {\n   // Get theme-aware styles\n   const themedStyles = getThemedStyles(theme, variant, themeConfig);\n \n-  const { status, message, retry } = useOAuthCallback(\n-    params,\n-    config,\n-    {\n-      onSuccess,\n-      onError,\n-      autoStart: true,\n-    }\n-  );\n+  const { status, message, retry } = useOAuthCallback(params, config, {\n+    onSuccess,\n+    onError,\n+    autoStart: true,\n+  });\n \n   // Handle auto-redirect on success\n   useEffect(() => {\n     if (status === 'success' && autoRedirect && onSuccess) {\n@@ -126,9 +122,11 @@\n \n   const getStatusMessage = () => {\n     switch (status) {\n       case 'processing':\n-        return messages?.processing || message || 'Processing OAuth callback...';\n+        return (\n+          messages?.processing || message || 'Processing OAuth callback...'\n+        );\n       case 'success':\n         return messages?.success || message || 'Authentication successful!';\n       case 'error':\n         return messages?.error || message;\n@@ -143,20 +141,38 @@\n     const ErrorIcon = components?.ErrorIcon;\n \n     switch (status) {\n       case 'processing':\n-        return <LoadingIndicator size=\"large\" color={themedStyles.colors.primary} />;\n+        return (\n+          <LoadingIndicator size=\"large\" color={themedStyles.colors.primary} />\n+        );\n       case 'success':\n         return SuccessIcon ? (\n           <SuccessIcon />\n         ) : (\n-          <Text style={[themedStyles.icon, themedStyles.successIcon, customStyles?.title]}>✓</Text>\n+          <Text\n+            style={[\n+              themedStyles.icon,\n+              themedStyles.successIcon,\n+              customStyles?.title,\n+            ]}\n+          >\n+            ✓\n+          </Text>\n         );\n       case 'error':\n         return ErrorIcon ? (\n           <ErrorIcon />\n         ) : (\n-          <Text style={[themedStyles.icon, themedStyles.errorIcon, customStyles?.title]}>✗</Text>\n+          <Text\n+            style={[\n+              themedStyles.icon,\n+              themedStyles.errorIcon,\n+              customStyles?.title,\n+            ]}\n+          >\n+            ✗\n+          </Text>\n         );\n       default:\n         return null;\n     }\n@@ -211,69 +227,22 @@\n     </Container>\n   );\n }\n \n-/**\n- * Default styles for the OAuth callback screen\n- */\n-const styles = StyleSheet.create({\n-  container: {\n-    flex: 1,\n-    backgroundColor: '#ffffff',\n-    justifyContent: 'center',\n-    alignItems: 'center',\n-    padding: 20,\n-  },\n-  content: {\n-    alignItems: 'center',\n-    maxWidth: 300,\n-  },\n-  icon: {\n-    fontSize: 48,\n-    marginBottom: 20,\n-    color: '#007AFF',\n-  },\n-  errorIcon: {\n-    color: '#FF3B30',\n-  },\n-  title: {\n-    fontSize: 24,\n-    fontWeight: '600',\n-    color: '#000000',\n-    marginBottom: 12,\n-    textAlign: 'center',\n-  },\n-  message: {\n-    fontSize: 16,\n-    color: '#666666',\n-    textAlign: 'center',\n-    lineHeight: 22,\n-    marginBottom: 30,\n-  },\n-  button: {\n-    backgroundColor: '#007AFF',\n-    paddingHorizontal: 24,\n-    paddingVertical: 12,\n-    borderRadius: 8,\n-    minWidth: 120,\n-  },\n-  buttonText: {\n-    color: '#ffffff',\n-    fontSize: 16,\n-    fontWeight: '600',\n-    textAlign: 'center',\n-  },\n-});\n \n+\n /**\n  * Minimal OAuth callback screen with just loading indicator\n  */\n export function MinimalOAuthCallbackScreen({\n   params,\n   config,\n   onSuccess,\n   onError,\n-}: Pick<OAuthCallbackScreenProps, 'params' | 'config' | 'onSuccess' | 'onError'>) {\n+}: Pick<\n+  OAuthCallbackScreenProps,\n+  'params' | 'config' | 'onSuccess' | 'onError'\n+>) {\n   useOAuthCallback(params, config, { onSuccess, onError });\n \n   return (\n     <View style={minimalStyles.container}>\n"
+                },
+                {
+                    "date": 1753027182861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -227,10 +227,8 @@\n     </Container>\n   );\n }\n \n-\n-\n /**\n  * Minimal OAuth callback screen with just loading indicator\n  */\n export function MinimalOAuthCallbackScreen({\n@@ -504,9 +502,9 @@\n           alignItems: 'center',\n           padding: themeConfig.spacing.md,\n         },\n         content: {\n-          alignItems: 'center',\n+          alignItems: 'center' as const,\n           maxWidth: 280,\n         },\n         button: {\n           backgroundColor: themeConfig.colors.primary,\n"
+                },
+                {
+                    "date": 1753027196915,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -525,9 +525,9 @@\n           alignItems: 'center',\n           padding: themeConfig.spacing.lg,\n         },\n         content: {\n-          alignItems: 'center',\n+          alignItems: 'center' as const,\n           maxWidth: 320,\n           backgroundColor: themeConfig.colors.surface,\n           padding: themeConfig.spacing.xl,\n           borderRadius: themeConfig.borderRadius.lg,\n"
+                },
+                {
+                    "date": 1753027208021,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -555,9 +555,9 @@\n           alignItems: 'center',\n           padding: themeConfig.spacing.lg,\n         },\n         content: {\n-          alignItems: 'center',\n+          alignItems: 'center' as const,\n           maxWidth: 340,\n           backgroundColor: themeConfig.colors.surface,\n           padding: themeConfig.spacing.xl,\n           borderRadius: themeConfig.borderRadius.xl,\n"
+                },
+                {
+                    "date": 1753027218537,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -584,9 +584,9 @@\n           alignItems: 'center',\n           padding: themeConfig.spacing.lg,\n         },\n         content: {\n-          alignItems: 'center',\n+          alignItems: 'center' as const,\n           maxWidth: 300,\n         },\n         button: {\n           backgroundColor: themeConfig.colors.primary,\n"
+                },
+                {
+                    "date": 1753027233422,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -469,9 +469,9 @@\n       color: themeConfig.colors.error,\n     },\n     title: {\n       fontSize: themeConfig.typography.h2.fontSize,\n-      fontWeight: themeConfig.typography.h2.fontWeight,\n+      fontWeight: themeConfig.typography.h2.fontWeight as any,\n       color: themeConfig.colors.text,\n       marginBottom: themeConfig.spacing.sm,\n       textAlign: 'center' as const,\n     },\n"
+                },
+                {
+                    "date": 1753027244395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -484,9 +484,9 @@\n     },\n     buttonText: {\n       color: '#ffffff',\n       fontSize: themeConfig.typography.body.fontSize,\n-      fontWeight: '600',\n+      fontWeight: '600' as any,\n       textAlign: 'center' as const,\n     },\n   };\n \n"
+                },
+                {
+                    "date": 1753027263381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -239,9 +239,9 @@\n }: Pick<\n   OAuthCallbackScreenProps,\n   'params' | 'config' | 'onSuccess' | 'onError'\n >) {\n-  useOAuthCallback(params, config, { onSuccess, onError });\n+  useOAuthCallback(params || {}, config, { onSuccess, onError });\n \n   return (\n     <View style={minimalStyles.container}>\n       <ActivityIndicator size=\"large\" color=\"#007AFF\" />\n"
+                },
+                {
+                    "date": 1753028078408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -497,10 +497,10 @@\n         ...baseStyles,\n         container: {\n           flex: 1,\n           backgroundColor: 'transparent',\n-          justifyContent: 'center',\n-          alignItems: 'center',\n+          justifyContent: 'center' as const,\n+          alignItems: 'center' as const,\n           padding: themeConfig.spacing.md,\n         },\n         content: {\n           alignItems: 'center' as const,\n"
+                },
+                {
+                    "date": 1753028089432,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -520,10 +520,10 @@\n         ...baseStyles,\n         container: {\n           flex: 1,\n           backgroundColor: themeConfig.colors.background,\n-          justifyContent: 'center',\n-          alignItems: 'center',\n+          justifyContent: 'center' as const,\n+          alignItems: 'center' as const,\n           padding: themeConfig.spacing.lg,\n         },\n         content: {\n           alignItems: 'center' as const,\n"
+                },
+                {
+                    "date": 1753028099912,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -550,10 +550,10 @@\n         ...baseStyles,\n         container: {\n           flex: 1,\n           backgroundColor: 'rgba(0, 0, 0, 0.5)',\n-          justifyContent: 'center',\n-          alignItems: 'center',\n+          justifyContent: 'center' as const,\n+          alignItems: 'center' as const,\n           padding: themeConfig.spacing.lg,\n         },\n         content: {\n           alignItems: 'center' as const,\n"
+                },
+                {
+                    "date": 1753028110641,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -579,10 +579,10 @@\n         ...baseStyles,\n         container: {\n           flex: 1,\n           backgroundColor: themeConfig.colors.background,\n-          justifyContent: 'center',\n-          alignItems: 'center',\n+          justifyContent: 'center' as const,\n+          alignItems: 'center' as const,\n           padding: themeConfig.spacing.lg,\n         },\n         content: {\n           alignItems: 'center' as const,\n"
                 }
             ],
             "date": 1752837555008,

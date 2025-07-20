@@ -1,6 +1,7 @@
 // Import core types from oauth-core
+import type { OAuthConfigOptions } from '@zestic/oauth-core';
+
 export type {
-  OAuthConfig,
   OAuthAdapters,
   OAuthResult,
   StorageAdapter,
@@ -13,20 +14,29 @@ export type {
   TokenResponse,
   OAuthError,
   OAuthErrorCode,
+  OAuthConfigOptions,
+  OAuthEndpoints,
 } from '@zestic/oauth-core';
 
 /**
  * OAuth configuration for Expo applications
  * Extends the core OAuthConfig with Expo-specific properties
  */
-export interface ExpoOAuthConfig extends OAuthConfig {
+export interface ExpoOAuthConfig extends OAuthConfigOptions {
+  // Required OAuth properties
+  clientId: string;
+  redirectUri: string;
+  scopes: string[];
+
+  // Expo-specific properties
   scheme: string;
   path: string;
+
   // Override endpoints to make revocation optional for Expo
   endpoints: {
     authorization: string;
     token: string;
-    revocation?: string;
+    revocation: string;
   };
 }
 

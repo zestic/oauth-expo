@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1752841419519,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753027587584,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,11 +25,14 @@\n       clientId: 'test',\n       endpoints: {\n         authorization: 'https://auth.example.com/authorize',\n         token: 'https://auth.example.com/token',\n+        revocation: 'https://auth.example.com/revoke',\n       },\n       redirectUri: 'myapp://callback',\n       scopes: ['read'],\n+      scheme: 'myapp',\n+      path: 'oauth/callback',\n     };\n \n     expect(config).toBeDefined();\n   });\n"
+                },
+                {
+                    "date": 1753027601010,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,11 +46,14 @@\n       clientId: 'test',\n       endpoints: {\n         authorization: 'https://auth.example.com/authorize',\n         token: 'https://auth.example.com/token',\n+        revocation: 'https://auth.example.com/revoke',\n       },\n       redirectUri: 'myapp://callback',\n       scopes: ['read'],\n+      scheme: 'myapp',\n+      path: 'oauth/callback',\n     };\n \n     expect(() => new OAuthExpo.ExpoOAuthAdapter(config)).not.toThrow();\n   });\n"
                 }
             ],
             "date": 1752841419519,

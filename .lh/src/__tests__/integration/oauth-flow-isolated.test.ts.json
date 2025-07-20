@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1753008728976,
@@ -16,6 +16,10 @@
                 {
                     "date": 1753008776578,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,11 +13,10 @@\n     redirectUri: 'myapp://oauth/callback',\n     scopes: ['read', 'write'],\n   };\n \n-  // Use describe.only to run this test in complete isolation\n-  // Remove .only when the test is stable\n-  describe.only('Complete OAuth Flow', () => {\n+  // This test runs in isolation to avoid storage state pollution\n+  describe('Complete OAuth Flow', () => {\n     beforeAll(() => {\n       // Ensure complete isolation by resetting all mock state\n       (global as any).clearMockStorage?.();\n       (global as any).resetMockCrypto?.();\n"
+                },
+                {
+                    "date": 1753027457875,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n             expires_in: 3600,\n           }),\n       };\n       mockTokenResponse.headers.forEach = jest.fn((callback) => {\n-        callback('application/json', 'content-type');\n+        callback('application/json', 'content-type', mockTokenResponse.headers);\n       });\n       (global.fetch as jest.Mock).mockResolvedValueOnce(mockTokenResponse);\n \n       // 3. Handle callback using the same adapter instance\n"
                 }
             ],
             "date": 1753008728976,
