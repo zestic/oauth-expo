@@ -9,6 +9,9 @@
 .vscode/
 jsconfig.json
 
+# Local History (VSCode extension)
+.lh/
+
 # Xcode
 #
 build/
