@@ -14,17 +14,17 @@ OAuth 2.0 authentication library for Expo and React Native applications, built o
 ## Installation
 
 ```sh
-npm install oauth-expo @zestic/oauth-core
+npm install @zestic/oauth-expo @zestic/oauth-core
 # or
-yarn add oauth-expo @zestic/oauth-core
+yarn add @zestic/oauth-expo @zestic/oauth-core
 ```
 
 ## Quick Start
 
 ```tsx
 import React from 'react';
-import { ExpoOAuthAdapter, OAuthCallbackScreen } from 'oauth-expo';
-import type { ExpoOAuthConfig } from 'oauth-expo';
+import { ExpoOAuthAdapter, OAuthCallbackScreen } from '@zestic/oauth-expo';
+import type { ExpoOAuthConfig } from '@zestic/oauth-expo';
 
 // Configure your OAuth provider
 const config: ExpoOAuthConfig = {
