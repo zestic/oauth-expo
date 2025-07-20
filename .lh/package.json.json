@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1752836228560,
@@ -60,6 +60,10 @@
                 {
                     "date": 1753031144297,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -119,12 +119,12 @@\n       \"!src/types/index.ts\"\n     ],\n     \"coverageThreshold\": {\n       \"global\": {\n-        \"branches\": 85,\n-        \"functions\": 85,\n-        \"lines\": 85,\n-        \"statements\": 85\n+        \"branches\": 70,\n+        \"functions\": 80,\n+        \"lines\": 80,\n+        \"statements\": 80\n       }\n     }\n   },\n   \"commitlint\": {\n"
+                },
+                {
+                    "date": 1753031896453,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,10 +41,17 @@\n     \"release\": \"release-it --only-version\"\n   },\n   \"keywords\": [\n     \"react-native\",\n+    \"expo\",\n+    \"oauth\",\n+    \"oauth2\",\n+    \"authentication\",\n+    \"authorization\",\n+    \"pkce\",\n     \"ios\",\n-    \"android\"\n+    \"android\",\n+    \"typescript\"\n   ],\n   \"repository\": {\n     \"type\": \"git\",\n     \"url\": \"git+https://github.com/zestic/oauth-expo.git\"\n"
                 }
             ],
             "date": 1752836228560,

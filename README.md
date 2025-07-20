@@ -1,22 +1,67 @@
 # oauth-expo
 
-library for using oauth-core with Expo and React Native
+OAuth 2.0 authentication library for Expo and React Native applications, built on top of [@zestic/oauth-core](https://github.com/zestic/oauth-core).
+
+## Features
+
+- 🔐 **OAuth 2.0 & PKCE Support** - Secure authentication with PKCE flow
+- 📱 **Expo & React Native** - Native deep linking and secure storage
+- 🎨 **Customizable UI** - Pre-built components with theming support
+- 🔧 **TypeScript** - Full type safety and IntelliSense
+- 🧪 **Well Tested** - Comprehensive test suite with 80%+ coverage
+- 🏗️ **Clean Architecture** - Modular design with oauth-core integration
 
 ## Installation
 
 ```sh
-npm install oauth-expo
+npm install oauth-expo @zestic/oauth-core
+# or
+yarn add oauth-expo @zestic/oauth-core
 ```
 
-## Usage
+## Quick Start
 
+```tsx
+import React from 'react';
+import { ExpoOAuthAdapter, OAuthCallbackScreen } from 'oauth-expo';
+import type { ExpoOAuthConfig } from 'oauth-expo';
 
-```js
-import { multiply } from 'oauth-expo';
+// Configure your OAuth provider
+const config: ExpoOAuthConfig = {
+  clientId: 'your-client-id',
+  redirectUri: 'yourapp://oauth/callback',
+  scopes: ['read', 'write'],
+  scheme: 'yourapp',
+  path: 'oauth/callback',
+  endpoints: {
+    authorization: 'https://provider.com/oauth/authorize',
+    token: 'https://provider.com/oauth/token',
+    revocation: 'https://provider.com/oauth/revoke',
+  },
+};
 
-// ...
+// Initialize the OAuth adapter
+const oauthAdapter = new ExpoOAuthAdapter(config);
 
-const result = await multiply(3, 7);
+// Use in your app
+export default function App() {
+  const handleLogin = async () => {
+    try {
+      const result = await oauthAdapter.authenticate();
+      console.log('Authentication successful:', result);
+    } catch (error) {
+      console.error('Authentication failed:', error);
+    }
+  };
+
+  return (
+    <OAuthCallbackScreen
+      config={config}
+      onSuccess={(tokens) => console.log('Success:', tokens)}
+      onError={(error) => console.error('Error:', error)}
+    />
+  );
+}
 ```
 
 

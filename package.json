@@ -42,8 +42,15 @@
   },
   "keywords": [
     "react-native",
+    "expo",
+    "oauth",
+    "oauth2",
+    "authentication",
+    "authorization",
+    "pkce",
     "ios",
-    "android"
+    "android",
+    "typescript"
   ],
   "repository": {
     "type": "git",
