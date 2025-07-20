@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js and dependencies
+        uses: ./.github/actions/setup
+        with:
+          registry-url: 'https://registry.npmjs.org'
+        
+      - name: Run linting
+        run: yarn lint
+        
+      - name: Run tests
+        run: yarn test --coverage
+        
+      - name: Build package
+        run: yarn build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 30
+
+      - name: Publish to npm
+        run: yarn publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true

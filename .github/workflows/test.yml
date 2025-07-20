@@ -1,0 +1,51 @@
+name: Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    name: Test (Node.js ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20, 22]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Use custom setup action for Node 20 (matches .nvmrc)
+      - name: Setup Node.js and dependencies
+        if: matrix.node-version == 20
+        uses: ./.github/actions/setup
+
+      # Manual setup for other Node versions
+      - name: Enable Corepack
+        if: matrix.node-version != 20
+        run: corepack enable
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        if: matrix.node-version != 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        if: matrix.node-version != 20
+        run: yarn install --frozen-lockfile
+        
+      - name: Run tests
+        run: yarn test --coverage
+        
+      - name: Upload coverage reports to Codecov
+        if: matrix.node-version == 20
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: zestic/oauth-expo

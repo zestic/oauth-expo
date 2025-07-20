@@ -1,0 +1,26 @@
+{
+    "sourceFile": ".github/workflows/release.yml",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1753012490906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1753012512679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,11 +18,10 @@\n         run: corepack enable\n \n       - name: Setup Node.js and dependencies\n         uses: ./.github/actions/setup\n-\n-      - name: Configure npm registry\n-        run: npm config set registry https://registry.npmjs.org/\n+        with:\n+          registry-url: 'https://registry.npmjs.org'\n         \n       - name: Run linting\n         run: yarn lint\n         \n"
+                },
+                {
+                    "date": 1753012566400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,11 +13,8 @@\n     steps:\n       - name: Checkout code\n         uses: actions/checkout@v4\n \n-      - name: Enable Corepack\n-        run: corepack enable\n-\n       - name: Setup Node.js and dependencies\n         uses: ./.github/actions/setup\n         with:\n           registry-url: 'https://registry.npmjs.org'\n"
+                }
+            ],
+            "date": 1753012490906,
+            "name": "Commit-0",
+            "content": "name: Release\n\non:\n  push:\n    tags:\n      - 'v*'\n\njobs:\n  release:\n    name: Release\n    runs-on: ubuntu-latest\n    \n    steps:\n      - name: Checkout code\n        uses: actions/checkout@v4\n\n      - name: Enable Corepack\n        run: corepack enable\n\n      - name: Setup Node.js and dependencies\n        uses: ./.github/actions/setup\n\n      - name: Configure npm registry\n        run: npm config set registry https://registry.npmjs.org/\n        \n      - name: Run linting\n        run: yarn lint\n        \n      - name: Run tests\n        run: yarn test --coverage\n        \n      - name: Build package\n        run: yarn build\n\n      - name: Upload build artifacts\n        uses: actions/upload-artifact@v4\n        with:\n          name: dist\n          path: dist/\n          retention-days: 30\n\n      - name: Publish to npm\n        run: yarn publish --access public\n        env:\n          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}\n\n      - name: Create GitHub Release\n        uses: softprops/action-gh-release@v2\n        with:\n          files: dist/*\n          generate_release_notes: true\n"
+        }
+    ]
+}

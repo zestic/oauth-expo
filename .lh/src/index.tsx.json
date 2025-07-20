@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/index.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1752853237660,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1752904468131,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,8 +31,12 @@\n   HttpAdapter,\n   PKCEAdapter,\n   OAuthAdapters,\n   OAuthErrorCode,\n+  OAuthTheme,\n+  OAuthVariant,\n+  OAuthThemeConfig,\n+  OAuthComponentOverrides,\n } from './types';\n \n export { \n   OAuthError, \n"
+                },
+                {
+                    "date": 1752917928846,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,62 @@\n+// Main OAuth adapter\n+export { ExpoOAuthAdapter } from './ExpoOAuthAdapter';\n+\n+// Adapters\n+export { \n+  ExpoStorageAdapter, \n+  ExpoHttpAdapter, \n+  ExpoPKCEAdapter \n+} from './adapters';\n+\n+// Components\n+export { OAuthCallbackScreen } from './components';\n+\n+// Hooks\n+export { \n+  useOAuthCallback, \n+  useOAuthConfig \n+} from './hooks';\n+\n+// Types - Import core types from oauth-core and Expo-specific types from local types\n+export type {\n+  // Core types from oauth-core\n+  OAuthConfig,\n+  OAuthAdapters,\n+  OAuthResult,\n+  StorageAdapter,\n+  HttpAdapter,\n+  PKCEAdapter,\n+  HttpResponse,\n+  FlowConfiguration,\n+  PKCEChallenge,\n+  TokenExchangeRequest,\n+  TokenResponse,\n+  OAuthError,\n+  OAuthErrorCode,\n+  // Expo-specific types\n+  ExpoOAuthConfig,\n+  OAuthCallbackParams,\n+  TokenData,\n+  PKCEParams,\n+  OAuthCallbackStatus,\n+  OAuthCallbackHookResult,\n+  OAuthTheme,\n+  OAuthVariant,\n+  OAuthThemeConfig,\n+  OAuthComponentOverrides,\n+} from './types';\n+\n+// Re-export everything as default for convenience\n+import { ExpoOAuthAdapter } from './ExpoOAuthAdapter';\n+import { OAuthCallbackScreen } from './components';\n+import { useOAuthCallback, useOAuthConfig } from './hooks';\n+import { OAuthError, OAUTH_ERROR_CODES } from './types';\n+\n+export default {\n+  ExpoOAuthAdapter,\n+  OAuthCallbackScreen,\n+  useOAuthCallback,\n+  useOAuthConfig,\n+  OAuthError,\n+  OAUTH_ERROR_CODES,\n+};\n"
+                }
+            ],
+            "date": 1752853237660,
+            "name": "Commit-0",
+            "content": "// Main OAuth adapter\nexport { ExpoOAuthAdapter } from './ExpoOAuthAdapter';\n\n// Adapters\nexport { \n  ExpoStorageAdapter, \n  ExpoHttpAdapter, \n  ExpoPKCEAdapter \n} from './adapters';\n\n// Components\nexport { OAuthCallbackScreen } from './components';\n\n// Hooks\nexport { \n  useOAuthCallback, \n  useOAuthConfig \n} from './hooks';\n\n// Types\nexport type {\n  ExpoOAuthConfig,\n  OAuthCallbackParams,\n  OAuthResult,\n  TokenData,\n  PKCEParams,\n  FlowConfiguration,\n  OAuthCallbackStatus,\n  OAuthCallbackHookResult,\n  StorageAdapter,\n  HttpAdapter,\n  PKCEAdapter,\n  OAuthAdapters,\n  OAuthErrorCode,\n} from './types';\n\nexport { \n  OAuthError, \n  OAUTH_ERROR_CODES \n} from './types';\n\n// Re-export everything as default for convenience\nimport { ExpoOAuthAdapter } from './ExpoOAuthAdapter';\nimport { OAuthCallbackScreen } from './components';\nimport { useOAuthCallback, useOAuthConfig } from './hooks';\nimport { OAuthError, OAUTH_ERROR_CODES } from './types';\n\nexport default {\n  ExpoOAuthAdapter,\n  OAuthCallbackScreen,\n  useOAuthCallback,\n  useOAuthConfig,\n  OAuthError,\n  OAUTH_ERROR_CODES,\n};\n"
+        }
+    ]
+}

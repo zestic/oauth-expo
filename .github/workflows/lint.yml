@@ -1,0 +1,25 @@
+name: Lint
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js and dependencies
+        uses: ./.github/actions/setup
+        
+      - name: Run ESLint
+        run: yarn lint
+        
+      - name: Check TypeScript compilation
+        run: yarn build
