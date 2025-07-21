@@ -1,6 +1,6 @@
 {
   "name": "@zestic/oauth-expo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Library for using oauth-core with Expo and React Native",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
