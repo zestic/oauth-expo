@@ -57,7 +57,7 @@
     "url": "git+https://github.com/zestic/oauth-expo.git"
   },
   "author": "Zestic <develop@zestic.com> (https://github.com/zestic)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/zestic/oauth-expo/issues"
   },
