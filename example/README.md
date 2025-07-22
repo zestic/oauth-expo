@@ -14,12 +14,12 @@ This example app demonstrates how to use the `oauth-expo` library for OAuth auth
 
 1. Install dependencies:
    ```bash
-   yarn install
+   npm install
    ```
 
 2. Start the Expo development server:
    ```bash
-   yarn start
+   npm start
    ```
 
 3. Open the app in Expo Go or a simulator

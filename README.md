@@ -1,4 +1,9 @@
-# oauth-expo
+# @zestic/oauth-expo
+
+[![Test](https://github.com/zestic/oauth-expo/workflows/Test/badge.svg)](https://github.com/zestic/oauth-expo/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/zestic/oauth-expo/branch/main/graph/badge.svg)](https://codecov.io/gh/zestic/oauth-expo)
+[![npm version](https://badge.fury.io/js/%40zestic%2Foauth-expo.svg)](https://badge.fury.io/js/%40zestic%2Foauth-expo)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 OAuth 2.0 authentication library for Expo and React Native applications, built on top of [@zestic/oauth-core](https://github.com/zestic/oauth-core).
 
@@ -15,8 +20,6 @@ OAuth 2.0 authentication library for Expo and React Native applications, built o
 
 ```sh
 npm install @zestic/oauth-expo @zestic/oauth-core
-# or
-yarn add @zestic/oauth-expo @zestic/oauth-core
 ```
 
 ## Quick Start

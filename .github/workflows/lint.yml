@@ -19,7 +19,7 @@ jobs:
         uses: ./.github/actions/setup
         
       - name: Run ESLint
-        run: yarn lint
-        
+        run: npm run lint
+
       - name: Check TypeScript compilation
-        run: yarn build
+        run: npm run build

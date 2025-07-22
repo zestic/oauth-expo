@@ -20,13 +20,13 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
         
       - name: Run linting
-        run: yarn lint
-        
+        run: npm run lint
+
       - name: Run tests
-        run: yarn test --coverage
-        
+        run: npm test -- --coverage
+
       - name: Build package
-        run: yarn build
+        run: npm run build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

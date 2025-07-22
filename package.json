@@ -32,7 +32,7 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace oauth-expo-example",
+    "example": "npm run --workspace=oauth-expo-example",
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -100,7 +100,7 @@
   "workspaces": [
     "example"
   ],
-  "packageManager": "yarn@4.9.2",
+  "packageManager": "npm@10.0.0",
   "jest": {
     "preset": "react-native",
     "setupFilesAfterEnv": [
@@ -190,7 +190,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
-    "@zestic/oauth-core": "^0.2.0",
+    "@zestic/oauth-core": "^0.3.0",
     "expo-auth-session": "^6.2.1",
     "expo-modules-core": "^2.4.2"
   }

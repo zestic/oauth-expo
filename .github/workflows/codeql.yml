@@ -35,7 +35,7 @@ jobs:
       uses: ./.github/actions/setup
 
     - name: Build
-      run: yarn build
+      run: npm run build
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
