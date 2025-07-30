@@ -32,16 +32,39 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist/
+          path: lib/
           retention-days: 30
 
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Check if version already exists on npm
+        id: version_check
+        run: |
+          if npm view @zestic/oauth-expo@${{ steps.version.outputs.VERSION }} version 2>/dev/null; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Version ${{ steps.version.outputs.VERSION }} already exists on npm"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Version ${{ steps.version.outputs.VERSION }} does not exist on npm"
+          fi
+
       - name: Publish to npm
+        if: steps.version_check.outputs.exists == 'false'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Skip publishing (version exists)
+        if: steps.version_check.outputs.exists == 'true'
+        run: |
+          echo "⚠️ Version ${{ steps.version.outputs.VERSION }} already exists on npm"
+          echo "Skipping npm publish to prevent 403 error"
+          echo "This is expected behavior - the package was already published successfully"
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/*
+          files: lib/*
           generate_release_notes: true

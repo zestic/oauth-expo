@@ -97,12 +97,35 @@ Our pre-commit hooks verify that the linter and tests pass when committing.
 
 ### Publishing to npm
 
-We use [release-it](https://github.com/release-it/release-it) to make it easier to publish new versions. It handles common tasks like bumping version based on semver, creating tags and releases etc.
+We use [release-it](https://github.com/release-it/release-it) for version management and GitHub Actions for automated publishing. This ensures consistent, safe releases without duplication issues.
 
-To publish new versions, run the following:
+### Release Process
 
+1. **Create a version bump and tag** (this only updates version and creates a git tag):
+   ```sh
+   npm run release
+   ```
+
+2. **Push the tag to trigger automated publishing**:
+   ```sh
+   git push --follow-tags
+   ```
+
+3. **GitHub Actions automatically**:
+   - Runs tests and linting
+   - Builds the package
+   - Checks if version already exists on npm (prevents duplicates)
+   - Publishes to npm (only if version doesn't exist)
+   - Creates GitHub release with generated notes
+
+### Manual Publishing (Not Recommended)
+
+⚠️ **Avoid manual `npm publish`** as it can cause duplication errors in CI/CD workflows. The automated tag-based approach prevents these issues.
+
+If you must publish manually for testing:
 ```sh
-npm run release
+# Check if version exists first
+npm view @zestic/oauth-expo@$(npm pkg get version | tr -d '"') version 2>/dev/null && echo "Version exists" || npm publish --access public
 ```
 
 ### Scripts
