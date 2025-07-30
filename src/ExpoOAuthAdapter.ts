@@ -1,4 +1,8 @@
-import { OAuthCore } from '@zestic/oauth-core';
+import {
+  OAuthCore,
+  FlowHandlerFactory,
+  TokenManager,
+} from '@zestic/oauth-core';
 import {
   ExpoStorageAdapter,
   ExpoHttpAdapter,
@@ -35,9 +39,65 @@ export class ExpoOAuthAdapter {
     };
 
     // Initialize OAuth core with config and adapters
-    // Default to authorization_code flow if no flows specified
-    const flows = (config as any).flows || ['authorization_code'];
-    this.oauthCore = new OAuthCore(config, adapters, flows);
+    this.oauthCore = new OAuthCore(config, adapters);
+
+    // Register the authorization code flow handler
+    const authCodeFlowHandler = FlowHandlerFactory.create(
+      'authorization_code',
+      100, // Standard priority
+      // canHandle: Check for 'code' parameter (OAuth2 authorization code flow)
+      (params) =>
+        params.has('code') &&
+        !params.has('token') &&
+        !params.has('magic_link_token'),
+      // handle: Process the authorization code flow
+      async (params, oauthAdapters, oauthConfig) => {
+        const code = params.get('code');
+
+        if (!code) {
+          return {
+            success: false,
+            error: 'Missing authorization code',
+            errorCode: 'invalid_request',
+          };
+        }
+
+        try {
+          // Get the stored code verifier for PKCE
+          const codeVerifier =
+            await oauthAdapters.storage.getItem('pkce_code_verifier');
+          if (!codeVerifier) {
+            return {
+              success: false,
+              error: 'Missing PKCE code verifier',
+              errorCode: 'invalid_request',
+            };
+          }
+
+          // Use the token manager to exchange code for tokens
+          const tokenManager = new TokenManager(
+            oauthAdapters.http,
+            oauthAdapters.storage
+          );
+          const result = await tokenManager.exchangeAuthorizationCode(
+            code,
+            codeVerifier,
+            oauthConfig
+          );
+
+          return result;
+        } catch (error) {
+          return {
+            success: false,
+            error:
+              error instanceof Error ? error.message : 'Token exchange failed',
+            errorCode: 'token_exchange_failed',
+          };
+        }
+      }
+    );
+
+    this.oauthCore.registerFlow(authCodeFlowHandler);
   }
 
   /**

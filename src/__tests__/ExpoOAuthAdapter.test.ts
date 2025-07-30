@@ -1,4 +1,4 @@
-import { OAuthCore } from '@zestic/oauth-core';
+import { OAuthCore, FlowHandlerFactory } from '@zestic/oauth-core';
 import { ExpoOAuthAdapter } from '../ExpoOAuthAdapter';
 import {
   ExpoStorageAdapter,
@@ -15,9 +15,16 @@ jest.mock('../adapters/ExpoPKCEAdapter');
 // Mock OAuthCore
 jest.mock('@zestic/oauth-core', () => ({
   OAuthCore: jest.fn(),
+  FlowHandlerFactory: {
+    create: jest.fn(),
+  },
+  TokenManager: jest.fn(),
 }));
 
 const MockedOAuthCore = OAuthCore as jest.MockedClass<typeof OAuthCore>;
+const MockedFlowHandlerFactory = FlowHandlerFactory as jest.Mocked<
+  typeof FlowHandlerFactory
+>;
 const MockedExpoStorageAdapter = ExpoStorageAdapter as jest.MockedClass<
   typeof ExpoStorageAdapter
 >;
@@ -60,6 +67,7 @@ describe('ExpoOAuthAdapter', () => {
       generateState: jest.fn(),
       getAccessToken: jest.fn(),
       isTokenExpired: jest.fn(),
+      registerFlow: jest.fn(),
     } as any;
 
     mockStorageAdapter = {
@@ -89,6 +97,14 @@ describe('ExpoOAuthAdapter', () => {
     MockedExpoHttpAdapter.mockImplementation(() => mockHttpAdapter);
     MockedExpoPKCEAdapter.mockImplementation(() => mockPKCEAdapter);
 
+    // Mock FlowHandlerFactory.create to return a mock flow handler
+    MockedFlowHandlerFactory.create.mockReturnValue({
+      name: 'authorization_code',
+      priority: 100,
+      canHandle: jest.fn(),
+      handle: jest.fn(),
+    } as any);
+
     adapter = new ExpoOAuthAdapter(mockConfig);
   });
 
@@ -100,14 +116,25 @@ describe('ExpoOAuthAdapter', () => {
     });
 
     it('should initialize OAuthCore with config and adapters', () => {
-      expect(MockedOAuthCore).toHaveBeenCalledWith(
-        mockConfig,
-        {
-          storage: mockStorageAdapter,
-          http: mockHttpAdapter,
-          pkce: mockPKCEAdapter,
-        },
-        ['authorization_code']
+      expect(MockedOAuthCore).toHaveBeenCalledWith(mockConfig, {
+        storage: mockStorageAdapter,
+        http: mockHttpAdapter,
+        pkce: mockPKCEAdapter,
+      });
+    });
+
+    it('should register authorization code flow handler', () => {
+      expect(MockedFlowHandlerFactory.create).toHaveBeenCalledWith(
+        'authorization_code',
+        100,
+        expect.any(Function), // canHandle function
+        expect.any(Function) // handle function
+      );
+      expect(mockOAuthCore.registerFlow).toHaveBeenCalledWith(
+        expect.objectContaining({
+          name: 'authorization_code',
+          priority: 100,
+        })
       );
     });
   });

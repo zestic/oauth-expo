@@ -55,7 +55,7 @@ describe('OAuth Flow Integration Tests', () => {
 
       // Verify code verifier format (128 characters, unreserved chars only)
       expect(params.codeVerifier).toHaveLength(128);
-      expect(params.codeVerifier).toMatch(/^[A-Za-z0-9\-\._~]+$/);
+      expect(params.codeVerifier).toMatch(/^[A-Za-z0-9\-._~]+$/);
 
       // Verify code challenge is base64url encoded
       expect(params.codeChallenge).toMatch(/^[A-Za-z0-9\-_]+$/);

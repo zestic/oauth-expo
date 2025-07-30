@@ -39,7 +39,7 @@ describe('ExpoPKCEAdapter', () => {
       });
 
       expect(result.codeVerifier).toHaveLength(128);
-      expect(result.codeVerifier).toMatch(/^[A-Za-z0-9\-\._~]+$/);
+      expect(result.codeVerifier).toMatch(/^[A-Za-z0-9\-._~]+$/);
     });
 
     it('should generate different code verifiers on each call', async () => {
@@ -140,7 +140,7 @@ describe('ExpoPKCEAdapter', () => {
       const result = await adapter.generateCodeChallenge();
 
       // Should only contain unreserved characters as per RFC 7636
-      expect(result.codeVerifier).toMatch(/^[A-Za-z0-9\-\._~]+$/);
+      expect(result.codeVerifier).toMatch(/^[A-Za-z0-9\-._~]+$/);
     });
   });
 
